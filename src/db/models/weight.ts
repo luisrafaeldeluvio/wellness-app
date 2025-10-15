@@ -1,4 +1,4 @@
 export class WeightLog {
-  date!: Date;
+  date!: number;
   weight!: number;
 }
