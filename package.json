@@ -1,0 +1,23 @@
+{
+  "name": "wellness-app",
+  "version": "1.0.0",
+  "description": "A free and open source calorie tracker",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.2",
+    "fake-indexeddb": "^6.2.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "dexie": "^4.2.1"
+  }
+}
