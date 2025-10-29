@@ -1,4 +1,4 @@
-export class WeightLog {
-  date!: number;
-  weight!: number;
+export interface IWeightLog {
+  date: number;
+  weight: number;
 }

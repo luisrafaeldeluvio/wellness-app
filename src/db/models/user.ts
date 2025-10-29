@@ -7,7 +7,7 @@ export interface IUserInfo {
   deficit: number;
 }
 
-export class UserInfo {
+export class UserInfo implements IUserInfo {
   sex!: "male" | "female";
   age!: number;
   height!: number;
@@ -25,8 +25,8 @@ export class UserInfo {
   }
 
   getBMR(): number {
-    const mod = this.sex === "male" ? 5 : -161;
-    return 10 * this.weight + 6.25 * this.height - 5 * this.age + mod;
+    const sexMod = this.sex === "male" ? 5 : -161;
+    return 10 * this.weight + 6.25 * this.height - 5 * this.age + sexMod;
   }
 
   getTDEE(): number {
@@ -34,6 +34,7 @@ export class UserInfo {
   }
 
   getCalorieIntake(): number {
-    return this.getTDEE() - this.deficit;
+    const intake: number = this.getTDEE() - this.deficit;
+    return Math.max(this.sex === "male" ? 1500 : 1200, intake);
   }
 }
