@@ -13,7 +13,7 @@ export const addWeight = async (weightLog: IWeightLog) =>
 export const getWeight = async (id: number) => await db.weightlog.get(id);
 
 export const getWeightByDate = async (date: number) =>
-  await db.weightlog.where({ date: date }).toArray();
+  await db.weightlog.where({ date: date }).first();
 
 export const getWeightList = async (params: WeightListParams) => {
   let collection = db.weightlog.orderBy(params.order).limit(params.limit);
