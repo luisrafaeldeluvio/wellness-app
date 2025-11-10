@@ -1,4 +1,4 @@
-import { IFoodLog } from "./foodLog";
+import { type IFoodLog } from "./foodLog";
 
 export interface IJournal {
   id?: number;

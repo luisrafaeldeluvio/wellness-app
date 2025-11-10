@@ -1,8 +1,7 @@
-import "fake-indexeddb/auto";
 import Dexie, { type Table } from "dexie";
-import { IWeightLog } from "./models/weight";
+import { type IWeightLog } from "./models/weight";
 import { UserInfo } from "./models/user";
-import { IFoodLog } from "./models/foodLog";
+import { type IFoodLog } from "./models/foodLog";
 import { Journal } from "./models/journal";
 
 export class AppDB extends Dexie {

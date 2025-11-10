@@ -1,11 +1,11 @@
 import { db } from "../db";
-import { IFoodLog, TMealType } from "../db/models/foodLog";
+import { type IFoodLog, type TMealType } from "../db/models/foodLog";
 import { Journal } from "../db/models/journal";
 import { updateJournal } from "./journalService";
 
 export const addFoodLog = async (
   journal: Journal,
-  foodLog: IFoodLog
+  foodLog: IFoodLog,
 ): Promise<void> => {
   const logID = await db.foodlog.add(foodLog);
   journal.addFood(logID, foodLog);
