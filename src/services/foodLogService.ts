@@ -1,6 +1,4 @@
-import { db } from "../db";
-import { IFoodLog, TMealType } from "../db/models/foodLog";
-import { Journal } from "../db/models/journal";
+import { db, IFoodLog, TMealType, Journal } from "../db";
 import { updateJournal } from "./journalService";
 
 export const addFoodLog = async (

@@ -1,5 +1,4 @@
-import { db } from "../db";
-import { UserInfo } from "../db/models/user";
+import { db, UserInfo } from "../db";
 
 // USER_KEY represents the primary key for the single user profile in the database.
 const USER_KEY = 1;

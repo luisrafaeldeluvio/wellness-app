@@ -1,5 +1,4 @@
-import { db } from "../db";
-import { IWeightLog } from "../db/models/weight";
+import { db, IWeightLog } from "../db";
 
 interface WeightListParams {
   order: "date" | "weight";

@@ -1,5 +1,4 @@
-import { db } from "../db";
-import { Journal } from "../db/models/journal";
+import { db, Journal } from "../db";
 
 export const newJournal = async (journal: Journal) =>
   await db.journal.add(journal);
