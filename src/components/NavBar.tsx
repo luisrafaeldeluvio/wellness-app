@@ -26,7 +26,7 @@ export const NavItem = ({
       <div className={activeNavItem + " mb-2"}>
         <img src={iconURL} />
       </div>
-      <span>{label}</span>
+      <span className={isActive ? "font-semibold" : ""}>{label}</span>
     </li>
   );
 };
