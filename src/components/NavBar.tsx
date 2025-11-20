@@ -1,5 +1,6 @@
 import tempIcon from "./temp_icon.svg";
 import { useState } from "react";
+import { Link } from "wouter";
 
 interface NavItemProps {
   label: string;
@@ -47,12 +48,14 @@ export const NavBar = () => {
     <nav className="fixed bottom-0 left-0 w-full border-t border-t-black">
       <ul className="flex justify-around">
         {NavItems.map((item) => (
-          <NavItem
+          <Link href={`/${item.label}`}>
+           <NavItem
             label={item.label}
             iconURL={item.iconURL}
             isActive={activeTab === item.label}
             onClick={handleItemClick}
           ></NavItem>
+          </Link>
         ))}
       </ul>
     </nav>
