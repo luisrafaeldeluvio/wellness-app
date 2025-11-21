@@ -1,61 +1,72 @@
-import tempIcon from "./temp_icon.svg";
-import { useState } from "react";
-import { Link } from "wouter";
+import tempIcon from "src/assets/icons/temp_icon.svg";
+import { Link, useLocation } from "wouter";
 
 interface NavItemProps {
   label: string;
   iconURL: string;
-  isActive?: boolean;
-  onClick?: any;
+  href: string;
+  isActive: boolean;
 }
 
-export const NavItem = ({
-  label,
-  iconURL,
-  isActive = false,
-  onClick,
-}: NavItemProps) => {
-  const activeNavItem: string = isActive
+export const NavItem = ({ label, iconURL, href, isActive }: NavItemProps) => {
+  const activeClasses: string = isActive
     ? "relative before:absolute before:-inset-2 before:-inset-x-6 before:rounded-4xl before:border-1"
     : "";
 
+  const textClasses: string = isActive ? "font-semibold" : "";
+
   return (
-    <li
-      onClick={() => onClick(label)}
-      className="flex flex-col items-center justify-center p-4"
-    >
-      <div className={activeNavItem + " mb-2"}>
-        <img src={iconURL} />
-      </div>
-      <span className={isActive ? "font-semibold" : ""}>{label}</span>
+    <li >
+      <Link href={href} className="flex flex-col items-center justify-center p-4">
+        <div className={activeClasses + " mb-2"}>
+          <img src={iconURL} />
+        </div>
+        <span className={textClasses}>{label}</span>
+      </Link>
     </li>
   );
 };
 
 const NavItems: NavItemProps[] = [
-  { label: "Home", iconURL: tempIcon },
-  { label: "Log", iconURL: tempIcon },
-  { label: "Report", iconURL: tempIcon },
-  { label: "Menu", iconURL: tempIcon },
+  {
+    label: "Home",
+    iconURL: tempIcon,
+    href: "/Home",
+    isActive: false,
+  },
+  {
+    label: "Log",
+    iconURL: tempIcon,
+    href: "/Log",
+    isActive: false,
+  },
+  {
+    label: "Report",
+    iconURL: tempIcon,
+    href: "/Report",
+    isActive: false,
+  },
+  {
+    label: "Menu",
+    iconURL: tempIcon,
+    href: "/Menu",
+    isActive: false,
+  },
 ];
 
 export const NavBar = () => {
-  const [activeTab, setActiveTab] = useState("Home");
-
-  const handleItemClick = (tabName: string) => setActiveTab(tabName);
+  const [location] = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full border-t border-t-black">
+    <nav className="w-full border-t border-t-black h-18">
       <ul className="flex justify-around">
         {NavItems.map((item) => (
-          <Link href={`/${item.label}`}>
-           <NavItem
+          <NavItem
             label={item.label}
             iconURL={item.iconURL}
-            isActive={activeTab === item.label}
-            onClick={handleItemClick}
+            href={item.href}
+            isActive={location.includes(item.href)}
           ></NavItem>
-          </Link>
         ))}
       </ul>
     </nav>
