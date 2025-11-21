@@ -1,3 +1,5 @@
+import LogFoodButton from "../components/LogFoodButton";
+
 const Log = () => (
   <>
     <p className="text-green-600">Hello, world!</p>
@@ -7,7 +9,7 @@ const Log = () => (
     <p className="text-green-600">Hello, world!</p>
     <p className="text-green-600">Hello, world!</p>
     <p className="text-green-600">Hello, world!</p>
-    {/* <NavBar></NavBar> */}
+    <LogFoodButton></LogFoodButton>
   </>
 );
 

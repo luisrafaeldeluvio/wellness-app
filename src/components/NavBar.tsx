@@ -1,4 +1,4 @@
-import tempIcon from "src/assets/icons/temp_icon.svg";
+import tempIcon from "../assets/icons/temp_icon.svg";
 import { Link, useLocation } from "wouter";
 
 interface NavItemProps {
@@ -31,25 +31,25 @@ const NavItems: NavItemProps[] = [
   {
     label: "Home",
     iconURL: tempIcon,
-    href: "/Home",
+    href: "/home",
     isActive: false,
   },
   {
     label: "Log",
     iconURL: tempIcon,
-    href: "/Log",
+    href: "/log",
     isActive: false,
   },
   {
     label: "Report",
     iconURL: tempIcon,
-    href: "/Report",
+    href: "/report",
     isActive: false,
   },
   {
     label: "Menu",
     iconURL: tempIcon,
-    href: "/Menu",
+    href: "/menu",
     isActive: false,
   },
 ];
