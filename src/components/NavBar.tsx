@@ -16,8 +16,11 @@ export const NavItem = ({ label, iconURL, href, isActive }: NavItemProps) => {
   const textClasses: string = isActive ? "font-semibold" : "";
 
   return (
-    <li >
-      <Link href={href} className="flex flex-col items-center justify-center p-4">
+    <li>
+      <Link
+        href={href}
+        className="flex flex-col items-center justify-center p-4"
+      >
         <div className={activeClasses + " mb-2"}>
           <img src={iconURL} />
         </div>
@@ -58,7 +61,7 @@ export const NavBar = () => {
   const [location] = useLocation();
 
   return (
-    <nav className="w-full border-t border-t-black h-18">
+    <nav className="h-18 w-full border-t border-t-black">
       <ul className="flex justify-around">
         {NavItems.map((item) => (
           <NavItem

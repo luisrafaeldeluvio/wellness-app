@@ -1,14 +1,9 @@
+import CalendarHead from "../components/Calendar";
 import LogFoodButton from "../components/LogFoodButton";
 
 const Log = () => (
   <>
-    <p className="text-green-600">Hello, world!</p>
-    <p className="text-green-600">Hello, world!</p>
-    <p className="text-green-600">Hello, world!</p>
-    <p className="text-green-600">Hello, world!</p>
-    <p className="text-green-600">Hello, world!</p>
-    <p className="text-green-600">Hello, world!</p>
-    <p className="text-green-600">Hello, world!</p>
+    <CalendarHead></CalendarHead>
     <LogFoodButton></LogFoodButton>
   </>
 );
