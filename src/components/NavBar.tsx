@@ -38,9 +38,9 @@ const NavItems: NavItemProps[] = [
     isActive: false,
   },
   {
-    label: "Log",
+    label: "Journal",
     iconURL: tempIcon,
-    href: "/log",
+    href: "/journal",
     isActive: false,
   },
   {

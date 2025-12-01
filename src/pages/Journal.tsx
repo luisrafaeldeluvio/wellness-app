@@ -3,45 +3,49 @@ import CalendarHead from "../components/Calendar";
 import LogFoodButton from "../components/LogFoodButton";
 import MealGroup from "../components/MealGroup";
 import { useEffect, useState } from "react";
-import type { IFoodLog } from "../db/models/foodLog";
+import type { IFoodItem } from "../db/models/foodItem";
 import FoodItem from "../components/FoodItem";
-import { Journal } from "../db";
+import { Journal as JournalClass } from "../db";
 import { getJournalByDate } from "../services/journalService";
-import { addFoodLog, getFoodLog } from "../services/foodLogService";
+import { addFoodItem, getFoodItem } from "../services/foodItemService";
 
 async function init() {
   // await newJournal(new Journal(dayjs().toISOString()));
   const x = await getJournalByDate(dayjs().format("YYYY-MM-DD"));
   if (x === undefined) return;
-  await addFoodLog(x, {
+  await addFoodItem(x, {
     date: dayjs().format("YYYY-MM-DD"),
     mealType: "breakfast",
     name: "Egg",
-    calorie: 120,
+    energy: 120,
   });
 }
 
 // init();
 
-const Log = () => {
+const Journal = () => {
   const [date, setDate] = useState<Dayjs>(dayjs());
-  const [data, setData] = useState<Journal | undefined>(undefined);
-  const [foodLogs, setFoodLogs] = useState<IFoodLog[]>([]);
+  const [data, setData] = useState<JournalClass | undefined>(undefined);
+  const [foodItems, setFoodItems] = useState<IFoodItem[]>([]);
 
   useEffect(() => {
     (async () => {
-      const x = await getJournalByDate(date.format("YYYY-MM-DD"));
-      setFoodLogs([]);
+      const journal = await getJournalByDate(date.format("YYYY-MM-DD"));
+      setFoodItems([]);
 
-      if (x) {
-        const logs = await Promise.all(
-          x.foodLogIDs.map((id) => getFoodLog(id)),
+      if (!journal) return;
+
+      const items = await Promise.all(
+        journal.foodItemIDs.map((id) => getFoodItem(id)),
+      );
+      if (items)
+        setFoodItems(
+          items.filter(
+            (journal): journal is IFoodItem => journal !== undefined,
+          ),
         );
-        if (logs)
-          setFoodLogs(logs.filter((log): log is IFoodLog => log !== undefined));
-      }
 
-      setData(x);
+      setData(journal);
     })();
   }, [date]);
 
@@ -49,7 +53,7 @@ const Log = () => {
     <>
       <CalendarHead date={date} setDate={setDate}></CalendarHead>
       <MealGroup title="Breakfast" totalKcal={100}>
-        {foodLogs.map((food) => {
+        {foodItems.map((food) => {
           return <FoodItem data={food}></FoodItem>;
         })}
       </MealGroup>
@@ -58,4 +62,4 @@ const Log = () => {
   );
 };
 
-export default Log;
+export default Journal;
