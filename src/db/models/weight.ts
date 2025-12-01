@@ -1,5 +1,5 @@
 export interface IWeightLog {
   id?: number;
-  date: number;
+  date: string;
   weight: number;
 }

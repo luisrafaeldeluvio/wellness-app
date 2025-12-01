@@ -2,18 +2,18 @@ import { type IFoodLog } from "./foodLog";
 
 export interface IJournal {
   id?: number;
-  date: number;
+  date: string;
   foodLogIDs: number[];
   totalCalories: number;
 }
 
 export class Journal implements IJournal {
   id!: number;
-  date!: number;
+  date!: string;
   foodLogIDs!: number[];
   totalCalories!: number;
 
-  constructor(date: number) {
+  constructor(date: string) {
     this.date = date;
     this.foodLogIDs = [];
     this.totalCalories = 0;

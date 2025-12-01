@@ -1,6 +1,5 @@
-import { db } from "../db";
-import { type IFoodLog, type TMealType } from "../db/models/foodLog";
-import { Journal } from "../db/models/journal";
+import dayjs from "dayjs";
+import { db, type IFoodLog, type TMealType, Journal } from "../db";
 import { updateJournal } from "./journalService";
 
 export const addFoodLog = async (
@@ -16,8 +15,7 @@ export const addFoodLog = async (
 export const getFoodLog = async (id: number): Promise<IFoodLog | undefined> =>
   await db.foodlog.get(id);
 
-export const getFoodLogByTime = async (time: number) =>
-  await db.foodlog.where({ time: time }).first();
-
-export const getFoodLogByMealType = async (mealType: TMealType, date: number) =>
-  await db.foodlog.where({ mealType: mealType, date: date }).first();
+export const getFoodLogByMealType = async (mealType: TMealType, date: string) =>
+  await db.foodlog
+    .where({ mealType: mealType, date: dayjs(date).toISOString })
+    .first();
