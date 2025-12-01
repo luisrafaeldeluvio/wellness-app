@@ -1,26 +1,27 @@
-import { type IFoodLog } from "./foodLog";
+import dayjs from "dayjs";
+import { type IFoodItem } from "./foodItem";
 
 export interface IJournal {
   id?: number;
   date: string;
-  foodLogIDs: number[];
-  totalCalories: number;
+  foodItemIDs: number[];
+  totalEnergy: number;
 }
 
 export class Journal implements IJournal {
   id!: number;
   date!: string;
-  foodLogIDs!: number[];
-  totalCalories!: number;
+  foodItemIDs!: number[];
+  totalEnergy!: number;
 
   constructor(date: string) {
-    this.date = date;
-    this.foodLogIDs = [];
-    this.totalCalories = 0;
+    this.date = dayjs(date).format("YYYY-MM-DD");
+    this.foodItemIDs = [];
+    this.totalEnergy = 0;
   }
 
-  async addFood(logID: number, foodLog: IFoodLog) {
-    this.foodLogIDs.push(logID);
-    this.totalCalories += foodLog.calorie;
+  addFood(foodItemID: number, foodItem: IFoodItem) {
+    this.foodItemIDs.push(foodItemID);
+    this.totalEnergy += foodItem.energy;
   }
 }
