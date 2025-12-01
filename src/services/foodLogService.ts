@@ -17,5 +17,8 @@ export const getFoodLog = async (id: number): Promise<IFoodLog | undefined> =>
 
 export const getFoodLogByMealType = async (mealType: TMealType, date: string) =>
   await db.foodlog
-    .where({ mealType: mealType, date: dayjs(date).toISOString })
-    .first();
+    .where({
+      mealType: mealType,
+      date: dayjs(date).format("YYYY-MM-DD"),
+    })
+    .toArray();
