@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { db, IFoodLog, TMealType, Journal } from "../db";
 import { updateJournal } from "./journalService";
 
@@ -14,8 +15,7 @@ export const addFoodLog = async (
 export const getFoodLog = async (id: number): Promise<IFoodLog | undefined> =>
   await db.foodlog.get(id);
 
-export const getFoodLogByTime = async (time: number) =>
-  await db.foodlog.where({ time: time }).first();
-
-export const getFoodLogByMealType = async (mealType: TMealType, date: number) =>
-  await db.foodlog.where({ mealType: mealType, date: date }).first();
+export const getFoodLogByMealType = async (mealType: TMealType, date: string) =>
+  await db.foodlog
+    .where({ mealType: mealType, date: dayjs(date).toISOString })
+    .first();

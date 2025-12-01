@@ -3,8 +3,8 @@ export type TMealType = (typeof MealTypeArray)[number];
 
 export interface IFoodLog {
   id?: number;
-  date: number;
-  time: number;
+  date: string;
+  time: string;
   mealType: TMealType;
   name: string;
   calorie: number;

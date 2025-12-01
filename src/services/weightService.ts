@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { db, IWeightLog } from "../db";
 
 interface WeightListParams {
@@ -11,8 +12,8 @@ export const addWeight = async (weightLog: IWeightLog) =>
 
 export const getWeight = async (id: number) => await db.weightlog.get(id);
 
-export const getWeightByDate = async (date: number) =>
-  await db.weightlog.where({ date: date }).first();
+export const getWeightByDate = async (date: string) =>
+  await db.weightlog.where({ date: dayjs(date).toISOString }).first();
 
 export const getWeightList = async (params: WeightListParams) => {
   let collection = db.weightlog.orderBy(params.order).limit(params.limit);
