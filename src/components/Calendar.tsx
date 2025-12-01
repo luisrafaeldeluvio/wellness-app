@@ -27,12 +27,15 @@
 
 // export default Calendar;
 
-import { useState } from "react";
 import Button from "./Button";
 import dayjs from "dayjs";
 
-const CalendarHead = () => {
-  const [date, setDate] = useState(dayjs());
+interface DateProps {
+  date: dayjs.Dayjs;
+  setDate: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>;
+}
+
+const CalendarHead = ({ date, setDate }: DateProps) => {
   return (
     <div className="m-4 mx-auto flex h-18 w-96 flex-row items-center justify-around rounded-4xl border p-6">
       <Button
