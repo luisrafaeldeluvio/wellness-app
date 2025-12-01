@@ -1,10 +1,10 @@
 const MealTypeArray = ["breakfast", "lunch", "dinner", "snacks"] as const;
 export type TMealType = (typeof MealTypeArray)[number];
 
-export interface IFoodLog {
+export interface IFoodItem {
   id?: number;
   date: string;
   mealType: TMealType;
   name: string;
-  calorie: number;
+  energy: number;
 }
