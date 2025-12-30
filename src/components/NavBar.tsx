@@ -10,7 +10,7 @@ interface NavItemProps {
 
 export const NavItem = ({ label, iconURL, href, isActive }: NavItemProps) => {
   const activeClasses: string = isActive
-    ? "relative before:absolute before:-inset-2 before:-inset-x-6 before:rounded-4xl before:border-1"
+    ? "relative before:absolute before:-inset-2 before:-inset-x-6 before:rounded-4xl before:border"
     : "";
 
   const textClasses: string = isActive ? "font-semibold" : "";
