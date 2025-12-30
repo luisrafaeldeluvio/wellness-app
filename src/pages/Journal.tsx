@@ -10,7 +10,7 @@ import { addFoodItem, getFoodItem } from "../services/foodItemService";
 
 async function init() {
   // await newJournal(new Journal(dayjs().toISOString()));
-  const x = await getJournalByDate(dayjs().format("YYYY-MM-DD"));
+  const x = await getJournalByDate(dayjs().toString());
   if (x === undefined) {
     const journal = new JournalClass(dayjs().toString());
     addJournal(journal);
@@ -62,9 +62,14 @@ const Journal = () => {
   return (
     <>
       <CalendarHead date={date} setDate={setDate}></CalendarHead>
-      {foodItems.map((food) => (
-        <FoodItem data={food}></FoodItem>
-      ))}
+      <ul className="h-[calc(100dvh-11rem)] overflow-y-auto">
+        {foodItems.map((food) => (
+          <li>
+            <FoodItem data={food}></FoodItem>
+          </li>
+        ))}
+      </ul>
+
       <LogFoodButton></LogFoodButton>
     </>
   );
