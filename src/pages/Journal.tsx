@@ -62,7 +62,7 @@ const Journal = () => {
   return (
     <>
       <CalendarHead date={date} setDate={setDate}></CalendarHead>
-      <ul className="h-[calc(100dvh-11rem)] overflow-y-auto">
+      <ul>
         {foodItems.map((food) => (
           <li>
             <FoodItem data={food}></FoodItem>

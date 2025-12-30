@@ -5,26 +5,22 @@ interface NavItemProps {
   label: string;
   iconURL: string;
   href: string;
-  isActive: boolean;
+  isActive?: boolean;
 }
 
-export const NavItem = ({ label, iconURL, href, isActive }: NavItemProps) => {
-  const activeClasses: string = isActive
-    ? "relative before:absolute before:-inset-2 before:-inset-x-6 before:rounded-4xl before:border"
-    : "";
-
-  const textClasses: string = isActive ? "font-semibold" : "";
-
+export const NavItem = ({
+  label,
+  iconURL,
+  href,
+  isActive = false,
+}: NavItemProps) => {
   return (
     <li>
-      <Link
-        href={href}
-        className="flex flex-col items-center justify-center p-4"
-      >
-        <div className={activeClasses + " mb-2"}>
+      <Link href={href}>
+        <div>
           <img src={iconURL} />
         </div>
-        <span className={textClasses}>{label}</span>
+        <span>{label}</span>
       </Link>
     </li>
   );
@@ -35,25 +31,21 @@ const NavItems: NavItemProps[] = [
     label: "Home",
     iconURL: tempIcon,
     href: "/home",
-    isActive: false,
   },
   {
     label: "Journal",
     iconURL: tempIcon,
     href: "/journal",
-    isActive: false,
   },
   {
     label: "Report",
     iconURL: tempIcon,
     href: "/report",
-    isActive: false,
   },
   {
     label: "Menu",
     iconURL: tempIcon,
     href: "/menu",
-    isActive: false,
   },
 ];
 
@@ -61,8 +53,8 @@ export const NavBar = () => {
   const [location] = useLocation();
 
   return (
-    <nav className="h-18 w-full border-t border-t-black">
-      <ul className="flex justify-around">
+    <nav>
+      <ul>
         {NavItems.map((item) => (
           <NavItem
             label={item.label}
