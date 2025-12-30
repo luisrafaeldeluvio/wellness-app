@@ -5,17 +5,24 @@
     "**/.hg": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
+    ".gitignore": true,
     "tsconfig.node.json": true,
     "tsconfig.json": true,
     "tsconfig.app.json": true,
     "package.json": true,
     "package-lock.json": true,
     "eslint.config.js": true,
-    ".gitignore": true,
     "node_modules": true,
     ".vscode": true,
     "dist": true,
-    ".prettierrc": true
+    ".prettierrc": true,
+    "src/pages/Report.tsx": true,
+    "src/pages/Menu.tsx": true,
+    "src/pages/Home.tsx": true,
+    "vite.config.ts": true,
+    "index.html": true,
+    "src/main.tsx": true,
+    "src/index.css": true
   },
   "hide-files.files": [
     "tsconfig.node.json",
@@ -24,10 +31,16 @@
     "package.json",
     "package-lock.json",
     "eslint.config.js",
-    ".gitignore",
     "node_modules",
     ".vscode",
     "dist",
-    ".prettierrc"
+    ".prettierrc",
+    "src/pages/Report.tsx",
+    "src/pages/Menu.tsx",
+    "src/pages/Home.tsx",
+    "vite.config.ts",
+    "index.html",
+    "src/main.tsx",
+    "src/index.css"
   ]
 }
