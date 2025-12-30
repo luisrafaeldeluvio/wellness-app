@@ -20,8 +20,9 @@
     "index.html": true,
     "src/index.css": true,
     "eslint.config.js": true,
+    ".prettierrc": true,
     "src/main.tsx": true,
-    ".prettierrc": true
+    ".vscode": true
   },
   "hide-files.files": [
     "tsconfig.node.json",
@@ -38,8 +39,9 @@
     "index.html",
     "src/index.css",
     "eslint.config.js",
+    ".prettierrc",
     "src/main.tsx",
-    ".prettierrc"
+    ".vscode"
   ],
   "files.associations": {
     "*.css": "tailwindcss"
