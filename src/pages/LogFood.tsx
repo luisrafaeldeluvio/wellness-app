@@ -2,8 +2,11 @@ import dayjs from "dayjs";
 import { addFoodItem } from "../services/foodItemService";
 import { addJournal, getJournalByDate } from "../services/journalService";
 import { Journal } from "../db";
+import { useLocation } from "wouter";
 
 const LogFood = () => {
+  const [, setLocation] = useLocation();
+
   async function addFoodItemFromForm(data: FormData) {
     const journalDate = data.get("journalDate") as string | null;
     const foodName = data.get("foodName") as string | null;
@@ -25,6 +28,8 @@ const LogFood = () => {
       name: foodName,
       energy: energy,
     });
+
+    setLocation("/journal");
   }
 
   return (
@@ -38,7 +43,7 @@ const LogFood = () => {
             type="date"
             name="journalDate"
             id="journalDate"
-            value={dayjs().format("YYYY-MM-DD")}
+            defaultValue={dayjs().format("YYYY-MM-DD")}
             required
           />
 
