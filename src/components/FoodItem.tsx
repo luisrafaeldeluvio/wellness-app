@@ -6,13 +6,11 @@ interface FoodItemProps {
 
 const FoodItem = ({ data }: FoodItemProps) => {
   return (
-    <div>
-      <div>
-        <img src="src\assets\icons\temp_icon.svg" />
-        <span>{data.name}</span>
-        <span>{data.energy} kcal</span>
-      </div>
-    </div>
+    <li key={data.id}>
+      <img src="src\assets\icons\temp_icon.svg" />
+      <span>{data.name}</span>
+      <span>{data.energy} kcal</span>
+    </li>
   );
 };
 
