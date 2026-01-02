@@ -7,8 +7,8 @@ import Report from "./pages/Report";
 import LogFood from "./pages/LogFood";
 
 const App = () => (
-  <div className="flex h-dvh flex-col overflow-hidden">
-    <main className="relative flex h-full grow flex-col">
+  <div className="flex flex-col overflow-hidden">
+    <main className="relative flex h-[calc(100dvh-(var(--spacing)*18))] grow flex-col overflow-y-auto">
       <Switch>
         <Route path="/" component={Home}></Route>
         <Route path="/journal" component={Journal}></Route>
