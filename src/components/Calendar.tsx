@@ -1,32 +1,3 @@
-// import { useEffect, useRef, useState } from "react";
-// import { type Options } from "vanilla-calendar-pro";
-// import { Calendar as calendarClass } from "vanilla-calendar-pro";
-
-// import "vanilla-calendar-pro/styles/index.css";
-
-// interface CalendarProps extends React.HTMLAttributes<HTMLDivElement> {
-//   config?: Options;
-// }
-
-// const Calendar = ({ config, ...attributes }: CalendarProps) => {
-//   const ref = useRef(null);
-//   const [calendar, setCalendar] = useState<calendarClass | null>(null);
-
-//   useEffect(() => {
-//     if (!ref.current) return;
-//     setCalendar(new calendarClass(ref.current, config));
-//   }, [ref, config]);
-
-//   useEffect(() => {
-//     if (!calendar) return;
-//     calendar.init();
-//   }, [calendar]);
-
-//   return <div {...attributes} ref={ref}></div>;
-// };
-
-// export default Calendar;
-
 import Button from "./Button";
 import dayjs from "dayjs";
 

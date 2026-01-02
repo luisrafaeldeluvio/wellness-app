@@ -5,16 +5,20 @@ interface NavItemProps {
   label: string;
   iconURL: string;
   href: string;
-  isActive: boolean;
+  isActive?: boolean;
 }
 
-export const NavItem = ({ label, iconURL, href, isActive }: NavItemProps) => {
+export const NavItem = ({
+  label,
+  iconURL,
+  href,
+  isActive = false,
+}: NavItemProps) => {
   const activeClasses: string = isActive
     ? "relative before:absolute before:-inset-2 before:-inset-x-6 before:rounded-4xl before:border"
     : "";
 
   const textClasses: string = isActive ? "font-semibold" : "";
-
   return (
     <li>
       <Link
@@ -35,25 +39,21 @@ const NavItems: NavItemProps[] = [
     label: "Home",
     iconURL: tempIcon,
     href: "/home",
-    isActive: false,
   },
   {
     label: "Journal",
     iconURL: tempIcon,
     href: "/journal",
-    isActive: false,
   },
   {
     label: "Report",
     iconURL: tempIcon,
     href: "/report",
-    isActive: false,
   },
   {
     label: "Menu",
     iconURL: tempIcon,
     href: "/menu",
-    isActive: false,
   },
 ];
 
