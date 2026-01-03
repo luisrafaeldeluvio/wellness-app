@@ -1,6 +1,11 @@
+import type { Journal } from "../db";
 import Button from "./Button";
 
-const JournalSummary = () => {
+interface JournalProp {
+  data: Journal;
+}
+
+const JournalSummary = ({ data }: JournalProp) => {
   return (
     <>
       <div className="m-4 mx-auto flex w-[90%] flex-col justify-around rounded-4xl border p-4">
@@ -25,12 +30,12 @@ const JournalSummary = () => {
           <div className="flex flex-row gap-5">
             <div className="flex flex-col items-center">
               <span>Eaten</span>
-              <span className="font-bold">100kcal</span>
+              <span className="font-bold">{data.totalEnergy.intake} kcal</span>
             </div>
 
             <div className="flex flex-col items-center">
               <span>Burned</span>
-              <span className="font-bold">200kcal</span>
+              <span className="font-bold">{data.totalEnergy.outflow} kcal</span>
             </div>
           </div>
         </div>

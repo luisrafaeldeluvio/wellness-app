@@ -17,11 +17,10 @@
     "eslint.config.js": true,
     ".prettierrc": true,
     ".vscode": true,
-    "src/db": true,
-    "src/services": true,
     "index.html": true,
     "src/index.css": true,
-    "src/main.tsx": true
+    "src/main.tsx": true,
+    "src/assets/icons": true
   },
   "hide-files.files": [
     "tsconfig.node.json",
@@ -35,11 +34,10 @@
     "eslint.config.js",
     ".prettierrc",
     ".vscode",
-    "src/db",
-    "src/services",
     "index.html",
     "src/index.css",
-    "src/main.tsx"
+    "src/main.tsx",
+    "src/assets/icons"
   ],
   "files.associations": {
     "*.css": "tailwindcss"

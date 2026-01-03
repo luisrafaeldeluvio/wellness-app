@@ -36,23 +36,29 @@ async function init() {
 const Journal = () => {
   const [date, setDate] = useState<Dayjs>(dayjs());
   const [foodItems, setFoodItems] = useState<IFoodItem[]>([]);
+  const [journal, setJournal] = useState<JournalClass>(
+    new JournalClass(date.toString()),
+  );
 
   useEffect(() => {
     let ignore: boolean = false;
 
     (async () => {
-      const journal = await getJournalByDate(date.toString());
+      const journalData = await getJournalByDate(date.toString());
       setFoodItems([]);
-      if (!journal) return;
+      setJournal(new JournalClass(date.toString()));
+
+      if (!journalData) return;
+      setJournal(journalData);
 
       const foods = await Promise.all(
-        journal.foodItemIDs.map((id) => getFoodItem(id)),
+        journalData.foodItemIDs.map((id) => getFoodItem(id)),
       );
-
-      if (foods)
+      if (foods) {
         setFoodItems(
           foods.filter((food): food is IFoodItem => food !== undefined),
         );
+      }
     })();
 
     return () => {
@@ -65,7 +71,7 @@ const Journal = () => {
       <CalendarHead date={date} setDate={setDate}></CalendarHead>
 
       <div className="overflow-y-auto">
-        <JournalSummary></JournalSummary>
+        <JournalSummary data={journal}></JournalSummary>
 
         <ul className="">
           {foodItems.map((food) => (
