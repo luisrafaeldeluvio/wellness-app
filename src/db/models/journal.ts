@@ -31,10 +31,12 @@ export class Journal implements IJournal {
 
   addFood(foodItemID: number, foodItem: IFoodItem) {
     this.foodItemIDs.push(foodItemID);
-    if (foodItem.energy < 0) {
-      this.totalEnergy.outflow += foodItem.energy;
+
+    const energy = Number(foodItem.energy);
+    if (energy < 0) {
+      this.totalEnergy.outflow += energy;
     } else {
-      this.totalEnergy.intake += foodItem.energy;
+      this.totalEnergy.intake += energy;
     }
   }
 }
