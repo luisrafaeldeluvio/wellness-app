@@ -13,16 +13,15 @@
     "package-lock.json": true,
     "node_modules": true,
     "dist": true,
-    "src/pages/Report.tsx": true,
-    "src/pages/Menu.tsx": true,
-    "src/pages/Home.tsx": true,
     "vite.config.ts": true,
-    "index.html": true,
-    "src/index.css": true,
     "eslint.config.js": true,
     ".prettierrc": true,
-    "src/main.tsx": true,
-    ".vscode": true
+    ".vscode": true,
+    "src/db": true,
+    "src/services": true,
+    "index.html": true,
+    "src/index.css": true,
+    "src/main.tsx": true
   },
   "hide-files.files": [
     "tsconfig.node.json",
@@ -32,16 +31,15 @@
     "package-lock.json",
     "node_modules",
     "dist",
-    "src/pages/Report.tsx",
-    "src/pages/Menu.tsx",
-    "src/pages/Home.tsx",
     "vite.config.ts",
-    "index.html",
-    "src/index.css",
     "eslint.config.js",
     ".prettierrc",
-    "src/main.tsx",
-    ".vscode"
+    ".vscode",
+    "src/db",
+    "src/services",
+    "index.html",
+    "src/index.css",
+    "src/main.tsx"
   ],
   "files.associations": {
     "*.css": "tailwindcss"

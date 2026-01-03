@@ -21,7 +21,9 @@ const CalendarHead = ({ date, setDate }: DateProps) => {
       </Button>
 
       <div className="flex flex-col items-center">
-        <span className="font-bold">{date.format("MMMM DD, YYYY")}</span>
+        <span className="text-lg font-bold">
+          {date.format("MMMM DD, YYYY")}
+        </span>
         <span>{date.format("dddd")}</span>
       </div>
       <Button
