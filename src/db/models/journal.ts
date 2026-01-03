@@ -23,8 +23,10 @@ export class Journal implements IJournal {
   constructor(date: string) {
     this.date = dayjs(date).format("YYYY-MM-DD");
     this.foodItemIDs = [];
-    this.totalEnergy.intake = 0;
-    this.totalEnergy.outflow = 0;
+    this.totalEnergy = {
+      intake: 0,
+      outflow: 0,
+    };
   }
 
   addFood(foodItemID: number, foodItem: IFoodItem) {
