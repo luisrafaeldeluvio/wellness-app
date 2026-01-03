@@ -10,7 +10,7 @@ const LogFood = () => {
   async function addFoodItemFromForm(data: FormData) {
     const journalDate = data.get("journalDate") as string | null;
     const foodName = data.get("foodName") as string | null;
-    const energy = data.get("energy") as number | null;
+    const energy = data.get("energy") ? Number(data.get("energy")) : null;
 
     if (!journalDate || !foodName || !energy) {
       console.error("No data in form");
