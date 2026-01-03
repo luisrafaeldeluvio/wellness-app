@@ -7,6 +7,7 @@ import FoodItem from "../components/FoodItem";
 import { Journal as JournalClass } from "../db";
 import { addJournal, getJournalByDate } from "../services/journalService";
 import { addFoodItem, getFoodItem } from "../services/foodItemService";
+import JournalSummary from "../components/JournalSummary";
 
 async function init() {
   // await newJournal(new Journal(dayjs().toISOString()));
@@ -62,6 +63,9 @@ const Journal = () => {
   return (
     <>
       <CalendarHead date={date} setDate={setDate}></CalendarHead>
+
+      <JournalSummary></JournalSummary>
+
       <ul className="h-[calc(100dvh-11rem)] overflow-y-auto">
         {foodItems.map((food) => (
           <FoodItem data={food}></FoodItem>
