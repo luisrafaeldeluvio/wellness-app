@@ -8,7 +8,7 @@ interface DateProps {
 
 const CalendarHead = ({ date, setDate }: DateProps) => {
   return (
-    <div className="m-4 mx-auto flex h-18 w-96 flex-row items-center justify-around rounded-4xl border p-6">
+    <div className="m-4 mx-auto flex h-18 w-[90%] flex-row items-center justify-around rounded-4xl border p-6">
       <Button
         onClick={() => {
           setDate(date.add(-1, "day"));

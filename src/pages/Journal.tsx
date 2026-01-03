@@ -64,13 +64,15 @@ const Journal = () => {
     <>
       <CalendarHead date={date} setDate={setDate}></CalendarHead>
 
-      <JournalSummary></JournalSummary>
+      <div className="overflow-y-auto">
+        <JournalSummary></JournalSummary>
 
-      <ul className="h-[calc(100dvh-11rem)] overflow-y-auto">
-        {foodItems.map((food) => (
-          <FoodItem data={food}></FoodItem>
-        ))}
-      </ul>
+        <ul className="">
+          {foodItems.map((food) => (
+            <FoodItem data={food}></FoodItem>
+          ))}
+        </ul>
+      </div>
 
       <LogFoodButton></LogFoodButton>
     </>

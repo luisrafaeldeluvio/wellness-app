@@ -3,7 +3,7 @@ import Button from "./Button";
 const JournalSummary = () => {
   return (
     <>
-      <div className="m-4 mx-auto flex w-96 flex-col justify-around rounded-4xl border p-4">
+      <div className="m-4 mx-auto flex w-[90%] flex-col justify-around rounded-4xl border p-4">
         <div className="flex w-full flex-row items-center justify-between">
           <div className="flex flex-col">
             <span className="text-lg font-bold">Calories</span>
@@ -17,7 +17,7 @@ const JournalSummary = () => {
           </Button>
         </div>
 
-        <div className="m-2 -mx-4 border border-black"></div>
+        <div className="m-2 -mx-4 h-0 border-b border-black"></div>
 
         <div className="flex w-full flex-row items-center justify-between">
           <div>{/*placeholder */}</div>
