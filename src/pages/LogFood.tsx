@@ -3,6 +3,7 @@ import { addFoodItem } from "../services/foodItemService";
 import { addJournal, getJournalByDate } from "../services/journalService";
 import { Journal } from "../db";
 import { useLocation } from "wouter";
+import Header from "../components/Header";
 
 const LogFood = () => {
   const [, setLocation] = useLocation();
@@ -34,6 +35,7 @@ const LogFood = () => {
 
   return (
     <>
+      <Header>Log Food</Header>
       <form action={addFoodItemFromForm} name="logFood" autoComplete="on">
         <fieldset>
           <legend>Log New Food</legend>

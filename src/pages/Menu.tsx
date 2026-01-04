@@ -1,4 +1,8 @@
+import Header from "../components/Header";
+
 const Menu = () => (
-    <p>Menu</p>
-)
-export default Menu
+  <>
+    <Header>Menu</Header>
+  </>
+);
+export default Menu;
