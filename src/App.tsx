@@ -5,6 +5,7 @@ import Journal from "./pages/Journal";
 import Menu from "./pages/Menu";
 import Report from "./pages/Report";
 import LogFood from "./pages/LogFood";
+import Profile from "./pages/Profile";
 
 const App = () => (
   <div className="flex flex-col overflow-hidden">
@@ -15,6 +16,8 @@ const App = () => (
         <Route path="/journal/logfood" component={LogFood}></Route>
         <Route path="/menu" component={Menu}></Route>
         <Route path="/report" component={Report}></Route>
+
+        <Route path="/profile" component={Profile}></Route>
 
         <Route path="/home">
           <Redirect to="/" />
