@@ -1,8 +1,8 @@
 export interface IUserInfo {
   sex: "male" | "female";
   age: number;
-  height: number;
-  weight: number;
+  height: number; //cm
+  weight: number; //kg
   activityLevel: number;
   energyBalance: "deficit" | "maintenance" | "surplus";
   energyOffset: number; // the amount of energy that adjusts the calorie intake
@@ -34,6 +34,16 @@ export class UserInfo implements IUserInfo {
 
   getTDEE(): number {
     return this.getBMR() * this.activityLevel;
+  }
+
+  getEnergyOffset(): number {
+    if (this.energyBalance == "deficit") {
+      return this.getTDEE() * 0.25;
+    } else if (this.energyBalance == "surplus") {
+      return this.getTDEE() * 1.25;
+    } else {
+      return 0;
+    }
   }
 
   getCalorieIntake(): number {
