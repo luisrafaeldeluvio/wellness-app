@@ -10,16 +10,14 @@ type TEnegryBalance = "deficit" | "maintenance" | "surplus";
 const Profile = () => {
   const [, setLocation] = useLocation();
   const [user, setUser] = useState<IUserInfo>();
-  // dont use partial here, its more difficult
-  // instead, create a new page that will appear for the first time the app
-  // is openned that will require users to input their info (Required)
-  // so you wont need to use partial since you already have the data.
+  const [userClass, setUserClass] = useState<UserInfo | null>();
 
   useEffect(() => {
     let ignore: boolean = false;
 
     (async () => {
       if (user) {
+        setUserClass(new UserInfo(user));
         const userInfo = new UserInfo(user);
         updateUser(userInfo);
         return;
@@ -51,7 +49,7 @@ const Profile = () => {
             type="radio"
             name="sex"
             value="male"
-            checked={user.sex === "male"}
+            defaultChecked={user.sex === "male"}
             onBlur={() => setUser({ ...user, sex: "male" })}
           />
         </label>
@@ -61,7 +59,7 @@ const Profile = () => {
             type="radio"
             name="sex"
             value="female"
-            checked={user.sex === "female"}
+            defaultChecked={user.sex === "female"}
             onBlur={() => setUser({ ...user, sex: "female" })}
           />
         </label>
@@ -81,6 +79,19 @@ const Profile = () => {
         />
 
         <select
+          name="activityLevel"
+          defaultValue={user.activityLevel}
+          onBlur={(e) =>
+            setUser({ ...user, activityLevel: Number(e.target.value) })
+          }
+        >
+          <option value="1.4">Very Light</option>
+          <option value="1.6">Light</option>
+          <option value="1.8">Moderate</option>
+          <option value="2.1">Heavy</option>
+        </select>
+
+        <select
           name="energyBalance"
           defaultValue={user.energyBalance}
           onBlur={(e) =>
@@ -95,6 +106,10 @@ const Profile = () => {
           <option value="surplus">Surplus</option>
         </select>
       </form>
+
+      <div>{userClass?.getEnergyOffset()}</div>
+      <div>{userClass?.getBMR()}</div>
+      <div>{userClass?.getTDEE()}</div>
     </>
   );
 };
