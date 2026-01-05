@@ -10,6 +10,10 @@ type TEnegryBalance = "deficit" | "maintenance" | "surplus";
 const Profile = () => {
   const [, setLocation] = useLocation();
   const [user, setUser] = useState<IUserInfo>();
+  // dont use partial here, its more difficult
+  // instead, create a new page that will appear for the first time the app
+  // is openned that will require users to input their info (Required)
+  // so you wont need to use partial since you already have the data.
 
   useEffect(() => {
     let ignore: boolean = false;

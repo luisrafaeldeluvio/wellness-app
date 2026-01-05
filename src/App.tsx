@@ -6,26 +6,53 @@ import Menu from "./pages/Menu";
 import Report from "./pages/Report";
 import LogFood from "./pages/LogFood";
 import Profile from "./pages/Profile";
+import { getUser } from "./services/userService";
+import { useEffect, useState } from "react";
+import CreateProfile from "./pages/CreateProfile";
 
-const App = () => (
-  <div className="flex flex-col overflow-hidden">
-    <main className="relative flex h-[calc(100dvh-(var(--spacing)*18))] grow flex-col overflow-y-auto">
-      <Switch>
-        <Route path="/" component={Home}></Route>
-        <Route path="/journal" component={Journal}></Route>
-        <Route path="/journal/logfood" component={LogFood}></Route>
-        <Route path="/menu" component={Menu}></Route>
-        <Route path="/report" component={Report}></Route>
+const App = () => {
+  const [hasProfile, setHasProfile] = useState<boolean | null>(null);
 
-        <Route path="/profile" component={Profile}></Route>
+  useEffect(() => {
+    (async () => {
+      const user = await getUser();
+      if (user) {
+        setHasProfile(true);
+      } else {
+        setHasProfile(false);
+      }
+    })();
+  }, []);
 
-        <Route path="/home">
-          <Redirect to="/" />
-        </Route>
-      </Switch>
-    </main>
-    <NavBar></NavBar>
-  </div>
-);
+  if (hasProfile == null) {
+    return;
+  }
+
+  if (!hasProfile) {
+    return <CreateProfile></CreateProfile>;
+  }
+
+  return (
+    <div className="flex flex-col overflow-hidden">
+      <main className="relative flex h-[calc(100dvh-(var(--spacing)*18))] grow flex-col overflow-y-auto">
+        <Switch>
+          <Route path="/" component={Home}></Route>
+          <Route path="/journal" component={Journal}></Route>
+          <Route path="/journal/logfood" component={LogFood}></Route>
+          <Route path="/menu" component={Menu}></Route>
+          <Route path="/report" component={Report}></Route>
+
+          <Route path="/profile" component={Profile}></Route>
+
+          <Route path="/home">
+            <Redirect to="/" />
+          </Route>
+        </Switch>
+      </main>
+
+      <NavBar></NavBar>
+    </div>
+  );
+};
 
 export default App;
