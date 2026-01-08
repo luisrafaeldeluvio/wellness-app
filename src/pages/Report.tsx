@@ -1,4 +1,8 @@
+import Header from "../components/Header";
+
 const Report = () => (
-    <p>Report</p>
-)
-export default Report
+  <>
+    <Header>Report</Header>
+  </>
+);
+export default Report;

@@ -8,6 +8,7 @@ import { Journal as JournalClass } from "../db";
 import { addJournal, getJournalByDate } from "../services/journalService";
 import { addFoodItem, getFoodItem } from "../services/foodItemService";
 import JournalSummary from "../components/JournalSummary";
+import Header from "../components/Header";
 
 async function init() {
   // await newJournal(new Journal(dayjs().toISOString()));
@@ -68,6 +69,7 @@ const Journal = () => {
 
   return (
     <>
+      <Header>Journal</Header>
       <CalendarHead date={date} setDate={setDate}></CalendarHead>
 
       <div className="overflow-y-auto">

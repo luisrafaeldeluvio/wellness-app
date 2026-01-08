@@ -1,10 +1,11 @@
 export interface IUserInfo {
   sex: "male" | "female";
   age: number;
-  height: number;
-  weight: number;
+  height: number; //cm
+  weight: number; //kg
   activityLevel: number;
-  deficit: number;
+  energyBalance: "deficit" | "maintenance" | "surplus";
+  energyOffset: number; // the amount of energy that adjusts the calorie intake
 }
 
 export class UserInfo implements IUserInfo {
@@ -13,7 +14,8 @@ export class UserInfo implements IUserInfo {
   height!: number;
   weight!: number;
   activityLevel!: number;
-  deficit!: number;
+  energyBalance!: "deficit" | "maintenance" | "surplus";
+  energyOffset!: number;
 
   constructor(params: IUserInfo) {
     this.sex = params.sex;
@@ -21,7 +23,8 @@ export class UserInfo implements IUserInfo {
     this.height = params.height;
     this.weight = params.weight;
     this.activityLevel = params.activityLevel;
-    this.deficit = params.deficit;
+    this.energyBalance = params.energyBalance;
+    this.energyOffset = params.energyOffset;
   }
 
   getBMR(): number {
@@ -33,8 +36,18 @@ export class UserInfo implements IUserInfo {
     return this.getBMR() * this.activityLevel;
   }
 
+  getEnergyOffset(): number {
+    if (this.energyBalance == "deficit") {
+      return this.getTDEE() * 0.25;
+    } else if (this.energyBalance == "surplus") {
+      return this.getTDEE() * 1.25;
+    } else {
+      return 0;
+    }
+  }
+
   getCalorieIntake(): number {
-    const intake: number = this.getTDEE() - this.deficit;
+    const intake: number = this.getTDEE() - this.energyOffset;
     return Math.max(this.sex === "male" ? 1500 : 1200, intake);
   }
 }
