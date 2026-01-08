@@ -43,26 +43,16 @@ const Profile = () => {
       </div>
 
       <form>
-        <label>
-          Male
-          <input
-            type="radio"
-            name="sex"
-            value="male"
-            defaultChecked={user.sex === "male"}
-            onBlur={() => setUser({ ...user, sex: "male" })}
-          />
-        </label>
-        <label>
-          Female
-          <input
-            type="radio"
-            name="sex"
-            value="female"
-            defaultChecked={user.sex === "female"}
-            onBlur={() => setUser({ ...user, sex: "female" })}
-          />
-        </label>
+        <select
+          name="sex"
+          defaultValue={user.sex}
+          onBlur={(e) =>
+            setUser({ ...user, sex: e.target.value as "male" | "female" })
+          }
+        >
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
 
         <input
           type="number"
