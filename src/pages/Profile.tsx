@@ -2,7 +2,7 @@ import { useLocation } from "wouter";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import { UserInfo, type IUserInfo } from "../db";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getUser, updateUser } from "../services/userService";
 
 type TEnegryBalance = "deficit" | "maintenance" | "surplus";
@@ -14,22 +14,34 @@ const Block = ({ children }: { children: React.ReactNode }) => {
 const Profile = () => {
   const [, setLocation] = useLocation();
   const [user, setUser] = useState<IUserInfo>();
-  const [userClass, setUserClass] = useState<UserInfo | null>();
+
+  const userClass = useMemo(() => {
+    return user ? new UserInfo(user) : null;
+  }, [user]);
 
   useEffect(() => {
     let ignore: boolean = false;
 
     (async () => {
-      if (user) {
-        setUserClass(new UserInfo(user));
-        const userInfo = new UserInfo(user);
-        updateUser(userInfo);
-        return;
-      }
+      if (user) return;
 
-      // Loads the user data from the db
       const userInfo = await getUser();
       if (userInfo) setUser({ ...userInfo });
+    })();
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let ignore: boolean = false;
+
+    (async () => {
+      if (!user) return;
+
+      const userInfo = new UserInfo(user);
+      await updateUser(userInfo);
     })();
 
     return () => {
