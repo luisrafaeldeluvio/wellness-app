@@ -1,5 +1,5 @@
 import { NavBar } from "./components/NavBar";
-import { Route, Switch, Redirect } from "wouter";
+import { Route, Switch, Redirect, useLocation } from "wouter";
 import Home from "./pages/Home";
 import Journal from "./pages/Journal";
 import Menu from "./pages/Menu";
@@ -7,30 +7,20 @@ import Report from "./pages/Report";
 import LogFood from "./pages/LogFood";
 import Profile from "./pages/Profile";
 import { getUser } from "./services/userService";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import CreateProfile from "./pages/CreateProfile";
 
 const App = () => {
-  const [hasProfile, setHasProfile] = useState<boolean | null>(null);
+  const [location, setLocation] = useLocation();
 
   useEffect(() => {
     (async () => {
       const user = await getUser();
-      if (user) {
-        setHasProfile(true);
-      } else {
-        setHasProfile(false);
+      if (!user) {
+        setLocation("/new");
       }
     })();
   }, []);
-
-  if (hasProfile == null) {
-    return;
-  }
-
-  if (!hasProfile) {
-    return <CreateProfile></CreateProfile>;
-  }
 
   return (
     <div className="flex flex-col overflow-hidden">
@@ -41,12 +31,11 @@ const App = () => {
           <Route path="/journal/logfood" component={LogFood}></Route>
           <Route path="/menu" component={Menu}></Route>
           <Route path="/report" component={Report}></Route>
-
           <Route path="/profile" component={Profile}></Route>
-
           <Route path="/home">
             <Redirect to="/" />
           </Route>
+          <Route path="/new" component={CreateProfile}></Route>;
         </Switch>
       </main>
 
