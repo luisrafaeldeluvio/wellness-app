@@ -1,11 +1,30 @@
-import type { Journal } from "../db";
+import { useEffect, useState } from "react";
+import { UserInfo, type Journal } from "../db";
 import Button from "./Button";
+import { getUser } from "../services/userService";
 
 interface JournalProp {
   data: Journal;
 }
 
 const JournalSummary = ({ data }: JournalProp) => {
+  const [user, setUser] = useState<UserInfo>();
+
+  useEffect(() => {
+    let ignore: boolean = false;
+
+    (async () => {
+      if (user) return;
+
+      const userInfo = await getUser();
+      if (userInfo) setUser(new UserInfo(userInfo));
+    })();
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
   return (
     <>
       <div className="m-4 mx-auto flex w-[90%] flex-col justify-around rounded-4xl border p-4">
@@ -13,7 +32,10 @@ const JournalSummary = ({ data }: JournalProp) => {
           <div className="flex flex-col">
             <span className="text-lg font-bold">Calories</span>
             <span>
-              <span className="font-semibold">750 kcal</span> left of 1500 kcal
+              <span className="font-semibold">
+                {data.totalEnergy.intake + data.totalEnergy.outflow + " kcal "}
+              </span>
+              {"left of " + user?.getCalorieIntake() + " kcal"}s
             </span>
           </div>
 
