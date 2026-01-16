@@ -22,6 +22,13 @@ const App = () => {
     })();
   }, []);
 
+  const noNavBar = ["/new", "/journal/logfood"];
+
+  const showNavBar = () => {
+    const inList = noNavBar.find((v) => v === location);
+    return inList ? false : true;
+  };
+
   return (
     <div className="flex flex-col overflow-hidden">
       <main className="relative flex h-[calc(100dvh-(var(--spacing)*18))] grow flex-col overflow-y-auto">
@@ -39,7 +46,7 @@ const App = () => {
         </Switch>
       </main>
 
-      <NavBar></NavBar>
+      {showNavBar() ? <NavBar></NavBar> : null}
     </div>
   );
 };
