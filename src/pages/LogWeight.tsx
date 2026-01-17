@@ -1,10 +1,16 @@
 import dayjs from "dayjs";
 import { useLocation } from "wouter";
 import Header from "../components/Header";
-import { addWeight } from "../services/weightService";
+import { addWeight, getWeight } from "../services/weightService";
+import { useEffect, useState } from "react";
 
 const LogWeight = () => {
   const [, setLocation] = useLocation();
+  const [currentWeight, setCurentWeight] = useState<number>();
+
+  useEffect(() => {
+    (async () => await getWeight().then((e) => setCurentWeight(e?.weight)))();
+  }, []);
 
   async function logWeightFromForm(data: FormData) {
     const weight = data.get("weight") ? Number(data.get("weight")) : null;
@@ -18,6 +24,8 @@ const LogWeight = () => {
       date: data.get("weightDate") as string,
       weight: weight,
     });
+
+    setLocation("/home");
   }
 
   return (
@@ -37,7 +45,13 @@ const LogWeight = () => {
           />
 
           <label htmlFor="weight">Weight</label>
-          <input type="number" name="weight" id="weight" required />
+          <input
+            type="number"
+            name="weight"
+            id="weight"
+            defaultValue={currentWeight}
+            required
+          />
 
           <input type="submit" value="Add" />
         </fieldset>
