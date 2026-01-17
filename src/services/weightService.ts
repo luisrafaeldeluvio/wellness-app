@@ -11,8 +11,8 @@ export const addWeight = async (weightLog: IWeightLog) =>
   await db.weightlog.add(weightLog);
 
 export const getWeight = async (id?: number) => {
-  if (!id) await db.weightlog.toCollection().last();
-  else await db.weightlog.get(id);
+  if (!id) return await db.weightlog.toCollection().last();
+  else return await db.weightlog.get(id);
 };
 
 export const getWeightByDate = async (date: string) =>
