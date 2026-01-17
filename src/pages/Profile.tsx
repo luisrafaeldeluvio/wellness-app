@@ -142,7 +142,7 @@ const Profile = () => {
         <Block>
           <div className="flex flex-row items-center justify-between">
             <span className="m-2">Weight</span>
-            <Button></Button>
+            <Button onClick={() => setLocation("/logweight")}></Button>
           </div>
 
           <div className="text-center">
