@@ -10,7 +10,10 @@ interface WeightListParams {
 export const addWeight = async (weightLog: IWeightLog) =>
   await db.weightlog.add(weightLog);
 
-export const getWeight = async (id: number) => await db.weightlog.get(id);
+export const getWeight = async (id?: number) => {
+  if (!id) return await db.weightlog.toCollection().last();
+  else return await db.weightlog.get(id);
+};
 
 export const getWeightByDate = async (date: string) =>
   await db.weightlog.where({ date: dayjs(date).format("YYYY-MM-DD") }).first();
