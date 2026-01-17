@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import { getUser } from "./services/userService";
 import { useEffect } from "react";
 import CreateProfile from "./pages/CreateProfile";
+import LogWeight from "./pages/LogWeight";
 
 const App = () => {
   const [location, setLocation] = useLocation();
@@ -42,7 +43,8 @@ const App = () => {
           <Route path="/home">
             <Redirect to="/" />
           </Route>
-          <Route path="/new" component={CreateProfile}></Route>;
+          <Route path="/new" component={CreateProfile}></Route>
+          <Route path="/logweight" component={LogWeight}></Route>
         </Switch>
       </main>
 
