@@ -4,6 +4,8 @@ import { addJournal, getJournalByDate } from "../services/journalService";
 import { Journal } from "../db";
 import { useLocation } from "wouter";
 import Header from "../components/Header";
+import Button from "../components/Button";
+import checkIcon from "../assets/icons/check_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 
 const LogFood = () => {
   const [, setLocation] = useLocation();
@@ -35,27 +37,62 @@ const LogFood = () => {
 
   return (
     <>
-      <Header>Log Food</Header>
-      <form action={addFoodItemFromForm} name="logFood" autoComplete="on">
+      <div className="flex flex-row items-center">
+        <Button onClick={() => setLocation("/journal")} style="mr-0">
+          Back
+        </Button>
+        <Header>Log Food</Header>
+      </div>
+
+      <form
+        action={addFoodItemFromForm}
+        name="logFood"
+        autoComplete="on"
+        className="m-4"
+      >
         <fieldset>
-          <legend>Log New Food</legend>
+          <div className="my-8 mt-0! flex flex-row justify-between">
+            <label htmlFor="journalDate">Date</label>
+            <input
+              type="date"
+              name="journalDate"
+              id="journalDate"
+              defaultValue={dayjs().format("YYYY-MM-DD")}
+              required
+            />
+          </div>
 
-          <label htmlFor="journalDate">Date</label>
-          <input
-            type="date"
-            name="journalDate"
-            id="journalDate"
-            defaultValue={dayjs().format("YYYY-MM-DD")}
-            required
-          />
+          <div className="my-8 flex flex-row justify-between">
+            <label htmlFor="foodName">Name</label>
+            <input
+              className="text-right"
+              type="text"
+              name="foodName"
+              id="foodName"
+              required
+            />
+          </div>
 
-          <label htmlFor="foodName">Name</label>
-          <input type="text" name="foodName" id="foodName" required />
-
-          <label htmlFor="energy">Energy</label>
-          <input type="number" name="energy" id="energy" required />
-          <input type="submit" value="Add" />
+          <div className="my-8 flex flex-row justify-between">
+            <label htmlFor="energy">Energy</label>
+            <input
+              className="text-right"
+              type="number"
+              name="energy"
+              id="energy"
+              required
+            />
+            kcal
+          </div>
         </fieldset>
+
+        <Button style="absolute right-0 bottom-0 m-4 rounded-xl border bg-white p-2">
+          <input
+            type="image"
+            className="flex size-9 items-center justify-center"
+            src={checkIcon}
+          />
+        </Button>
       </form>
     </>
   );
