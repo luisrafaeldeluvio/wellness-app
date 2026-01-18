@@ -2,16 +2,18 @@ import React, { useState } from "react";
 
 interface accordionProp {
   text: string;
+  style?: string;
 }
 
 const Accordion = ({
   text,
+  style,
   children,
 }: React.PropsWithChildren<accordionProp>) => {
   const [show, setshow] = useState<boolean>(false);
 
   return (
-    <div className={show ? "rounded-4xl border p-4" : ""}>
+    <div className={style + (show ? " rounded-4xl border p-4" : "")}>
       <button
         className={
           "flex w-full flex-row items-center justify-between " +
