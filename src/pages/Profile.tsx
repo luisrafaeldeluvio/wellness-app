@@ -4,12 +4,90 @@ import Header from "../components/Header";
 import { UserInfo, type IUserInfo } from "../db";
 import { useEffect, useMemo, useState } from "react";
 import { getUser, updateUser } from "../services/userService";
+import Accordion from "../components/Accordion";
 
 type TEnegryBalance = "deficit" | "maintenance" | "surplus";
 
 const Block = ({ children }: { children: React.ReactNode }) => {
   return <div className="aspect-square rounded-3xl border p-2">{children}</div>;
 };
+
+interface SelectOptionProp {
+  title: string;
+  desc: string;
+  value: any;
+  user: IUserInfo | undefined;
+  selected: boolean;
+  x: string;
+  setUser: React.Dispatch<React.SetStateAction<IUserInfo | undefined>>;
+}
+
+const SelectOption = ({
+  title,
+  desc,
+  value,
+  user,
+  selected,
+  x,
+  setUser,
+}: SelectOptionProp) => {
+  return (
+    <li>
+      <button
+        className={`m-2 text-left ${selected ? "rounded-2xl border p-2" : ""}`}
+        type="button"
+        onClick={() => {
+          if (!user) return;
+          setUser({ ...user, [x]: value });
+        }}
+      >
+        <p className="font-bold">{title}</p>
+        <p>{desc}</p>
+      </button>
+    </li>
+  );
+};
+
+const activityLevels = [
+  {
+    name: "Very Light",
+    value: 1.4,
+    desc: "Minimal movement, mostly sitting or resting.",
+  },
+  {
+    name: "Light",
+    value: 1.6,
+    desc: "Easy daily activities and slow-paced walking.",
+  },
+  {
+    name: "Moderate",
+    value: 1.8,
+    desc: "Brisk movement that raises your heart rate.",
+  },
+  {
+    name: "Heavy",
+    value: 2.1,
+    desc: "Intense exercise or strenuous manual labor.",
+  },
+];
+
+const energyBalances = [
+  {
+    name: "Deficit",
+    value: "deficit",
+    desc: "Eating fewer calories than your body burns to lose weight.",
+  },
+  {
+    name: "Maintenance",
+    value: "maintenance",
+    desc: "Eating the same amount of calories your body burns to stay the same weight.",
+  },
+  {
+    name: "Surplus",
+    value: "surplus",
+    desc: "Eating more calories than your body burns to gain weight.",
+  },
+];
 
 const Profile = () => {
   const [, setLocation] = useLocation();
@@ -53,6 +131,7 @@ const Profile = () => {
 
   return (
     <>
+      {/* should i make a component for this back button + header? */}
       <div className="flex flex-row items-center">
         <Button onClick={() => setLocation("/Menu")} style="mr-0">
           Back
@@ -105,39 +184,53 @@ const Profile = () => {
           </div>
         </fieldset>
 
-        {/* Build a custom Drop down menu */}
         <div className="flex flex-col *:my-4">
-          <select
-            name="activityLevel"
-            defaultValue={user.activityLevel}
-            onBlur={(e) =>
-              setUser({ ...user, activityLevel: Number(e.target.value) })
-            }
+          <Accordion
+            renderHeader={(show) => (
+              <p className={"m-2" + (show ? " mb-4" : "")}>Activity Level</p>
+            )}
           >
-            <option value="1.4">Very Light</option>
-            <option value="1.6">Light</option>
-            <option value="1.8">Moderate</option>
-            <option value="2.1">Heavy</option>
-          </select>
+            <div className="flex flex-col">
+              {activityLevels.map(({ name, value, desc }) => {
+                return (
+                  <SelectOption
+                    title={name}
+                    desc={desc}
+                    value={Number(value)}
+                    user={user}
+                    selected={user.activityLevel === value}
+                    x="activityLevel"
+                    setUser={setUser}
+                  ></SelectOption>
+                );
+              })}
+            </div>
+          </Accordion>
 
-          <select
-            name="energyBalance"
-            defaultValue={user.energyBalance}
-            onBlur={(e) =>
-              setUser({
-                ...user,
-                energyBalance: e.target.value as TEnegryBalance,
-              })
-            }
+          <Accordion
+            renderHeader={(show) => (
+              <p className={"m-2" + (show ? " mb-4" : "")}>Energy Balance</p>
+            )}
           >
-            <option value="deficit">Deficit</option>
-            <option value="maintenance">Maintenance</option>
-            <option value="surplus">Surplus</option>
-          </select>
+            <div className="flex flex-col">
+              {energyBalances.map(({ name, value, desc }) => {
+                return (
+                  <SelectOption
+                    title={name}
+                    desc={desc}
+                    value={String(value) as TEnegryBalance}
+                    user={user}
+                    selected={user.energyBalance === value}
+                    x="energyBalance"
+                    setUser={setUser}
+                  ></SelectOption>
+                );
+              })}
+            </div>
+          </Accordion>
         </div>
       </form>
 
-      {/* <div className="flex shrink grow basis-2/4 flex-row flex-wrap gap-4 p-4"> */}
       <div className="m-4 grid grid-cols-2 gap-4">
         <Block>
           <div className="flex flex-row items-center justify-between">

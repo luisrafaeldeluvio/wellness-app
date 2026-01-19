@@ -23,7 +23,7 @@ const App = () => {
     })();
   }, []);
 
-  const noNavBar = ["/new", "/journal/logfood"];
+  const noNavBar = ["/new", "/journal/logfood", "/Profile"];
 
   const showNavBar = () => {
     const inList = noNavBar.find((v) => v === location);
