@@ -33,7 +33,7 @@ const Accordion = ({
           (show ? " grid-rows-[1fr]" : "grid-rows-[0fr]")
         }
       >
-        <div className="min-h-0">{show ? children : null}</div>
+        <ul className="min-h-0">{show ? children : null}</ul>
       </div>
     </div>
   );
