@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
 interface accordionProp {
-  text: string;
   style?: string;
+  renderHeader: (show: boolean) => React.ReactNode;
 }
 
 const Accordion = ({
-  text,
   style,
   children,
+  renderHeader,
 }: React.PropsWithChildren<accordionProp>) => {
   const [show, setshow] = useState<boolean>(false);
 
@@ -24,7 +24,7 @@ const Accordion = ({
           setshow(!show);
         }}
       >
-        <p>{text}</p>
+        {renderHeader(show)}
       </button>
 
       <div
