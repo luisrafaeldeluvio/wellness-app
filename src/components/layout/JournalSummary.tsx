@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { UserInfo, type Journal } from "../db";
-import Button from "./Button";
-import { getUser } from "../services/userService";
+import { UserInfo, type Journal } from "../../db";
+import Button from "../ui/Button";
+import { getUser } from "../../services/userService";
 
 interface JournalProp {
   data: Journal;

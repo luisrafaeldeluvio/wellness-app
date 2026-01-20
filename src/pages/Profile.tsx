@@ -1,10 +1,10 @@
 import { useLocation } from "wouter";
-import Button from "../components/Button";
-import Header from "../components/Header";
+import Button from "../components/ui/Button";
+import Header from "../components/ui/Header";
 import { UserInfo, type IUserInfo } from "../db";
 import { useEffect, useMemo, useState } from "react";
 import { getUser, updateUser } from "../services/userService";
-import Accordion from "../components/Accordion";
+import Accordion from "../components/ui/Accordion";
 
 type TEnegryBalance = "deficit" | "maintenance" | "surplus";
 

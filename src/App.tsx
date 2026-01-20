@@ -1,4 +1,4 @@
-import { NavBar } from "./components/NavBar";
+import { NavBar } from "./components/layout/NavBar";
 import { Route, Switch, Redirect, useLocation } from "wouter";
 import Home from "./pages/Home";
 import Journal from "./pages/Journal";

@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
 import { useLocation } from "wouter";
-import Header from "../components/Header";
+import Header from "../components/ui/Header";
 import { addWeight, getWeight } from "../services/weightService";
 import { useEffect, useState } from "react";
-import Button from "../components/Button";
+import Button from "../components/ui/Button";
 import checkIcon from "../assets/icons/check_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 
 const LogWeight = () => {
