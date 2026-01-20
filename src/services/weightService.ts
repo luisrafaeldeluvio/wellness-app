@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
-import { db, type IWeightLog } from "../db";
+import { db, UserInfo, type IWeightLog } from "../db";
+import { getUser, updateUser } from "./userService";
 
 interface WeightListParams {
   order: "date" | "weight";
@@ -7,8 +8,15 @@ interface WeightListParams {
   limit: number;
 }
 
-export const addWeight = async (weightLog: IWeightLog) =>
+export const addWeight = async (weightLog: IWeightLog) => {
+  const User = await getUser();
+  if (!User) return;
+  const user = new UserInfo(User);
+  user.weight = weightLog.weight;
+  updateUser(user);
+
   await db.weightlog.add(weightLog);
+};
 
 export const getWeight = async (id?: number) => {
   if (!id) return await db.weightlog.toCollection().last();
