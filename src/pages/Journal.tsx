@@ -1,14 +1,14 @@
 import dayjs, { Dayjs } from "dayjs";
-import CalendarHead from "../components/Calendar";
-import LogFoodButton from "../components/LogFoodButton";
+import CalendarHead from "../components/layout/Calendar";
+import LogFoodButton from "../components/layout/LogFoodButton";
 import { useEffect, useState } from "react";
 import type { IFoodItem } from "../db/models/foodItem";
-import FoodItem from "../components/FoodItem";
+import FoodItem from "../components/layout/FoodItem";
 import { Journal as JournalClass } from "../db";
 import { addJournal, getJournalByDate } from "../services/journalService";
 import { addFoodItem, getFoodItem } from "../services/foodItemService";
-import JournalSummary from "../components/JournalSummary";
-import Header from "../components/Header";
+import JournalSummary from "../components/layout/JournalSummary";
+import Header from "../components/ui/Header";
 
 async function init() {
   // await newJournal(new Journal(dayjs().toISOString()));

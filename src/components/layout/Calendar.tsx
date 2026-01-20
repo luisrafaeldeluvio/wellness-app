@@ -1,4 +1,4 @@
-import Button from "./Button";
+import Button from "../ui/Button";
 import dayjs from "dayjs";
 
 interface DateProps {

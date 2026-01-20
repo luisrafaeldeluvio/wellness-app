@@ -3,8 +3,8 @@ import { addFoodItem } from "../services/foodItemService";
 import { addJournal, getJournalByDate } from "../services/journalService";
 import { Journal } from "../db";
 import { useLocation } from "wouter";
-import Header from "../components/Header";
-import Button from "../components/Button";
+import Header from "../components/ui/Header";
+import Button from "../components/ui/Button";
 import checkIcon from "../assets/icons/check_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 
 const LogFood = () => {

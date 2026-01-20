@@ -1,4 +1,4 @@
-import tempIcon from "../assets/icons/temp_icon.svg";
+import tempIcon from "../../assets/icons/temp_icon.svg";
 import { Link, useLocation } from "wouter";
 
 interface NavItemProps {

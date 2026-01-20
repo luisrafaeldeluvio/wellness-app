@@ -1,4 +1,4 @@
-import type { IFoodItem } from "../db/models/foodItem";
+import type { IFoodItem } from "../../db/models/foodItem";
 
 interface FoodItemProps {
   data: IFoodItem;
