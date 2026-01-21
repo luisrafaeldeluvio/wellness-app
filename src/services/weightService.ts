@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { db, UserInfo, type IWeightLog } from "../db";
+import { db, type UserInfo, type IWeightLog } from "../db";
 import { getUser, updateUser } from "./userService";
 
 interface WeightListParams {

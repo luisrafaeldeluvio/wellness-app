@@ -1,4 +1,4 @@
-import { db, IUserInfo } from "../db";
+import { db, type IUserInfo } from "../db";
 
 // USER_KEY represents the primary key for the single user profile in the database.
 const USER_KEY = 1;
