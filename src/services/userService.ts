@@ -23,4 +23,22 @@ const getCalorieIntake = (user: IUserInfo) => {
   return Math.max(user.sex === "male" ? 1500 : 1200, intake);
 };
 
-export { getUser, initUser, updateUser, getBMR, getTDEE, getCalorieIntake };
+const getEnergyOffset = (user: IUserInfo) => {
+  if (user.energyBalance == "deficit") {
+    return getTDEE(user) * 0.25;
+  } else if (user.energyBalance == "surplus") {
+    return getTDEE(user) * 1.25;
+  } else {
+    return 0;
+  }
+};
+
+export {
+  getUser,
+  initUser,
+  updateUser,
+  getBMR,
+  getTDEE,
+  getCalorieIntake,
+  getEnergyOffset,
+};

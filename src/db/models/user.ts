@@ -5,4 +5,5 @@ export interface IUserInfo {
   weight: number;
   activityLevel: number;
   deficit: number;
+  energyBalance: string;
 }
