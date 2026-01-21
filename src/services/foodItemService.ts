@@ -1,6 +1,5 @@
-import dayjs from "dayjs";
-import { db, type IFoodItem, type TMealType, Journal } from "../db";
-import { updateJournal } from "./journalService";
+import { db, type IFoodItem, IJournal } from "../db";
+import { addFoodToJournal } from "./journalService";
 
 /**
  * Adds a new food item entry to the database and updates the associated Journal
@@ -9,13 +8,12 @@ import { updateJournal } from "./journalService";
  * @param fooditem The food data to be added to the database.
  */
 export const addFoodItem = async (
-  journal: Journal,
+  journal: IJournal,
   fooditem: IFoodItem,
 ): Promise<void> => {
-  const foodItemID = await db.fooditem.add(fooditem);
-  journal.addFood(foodItemID, fooditem);
+  await db.fooditem.add(fooditem);
 
-  await updateJournal(journal);
+  addFoodToJournal(journal, fooditem);
 };
 
 /**
@@ -25,14 +23,3 @@ export const addFoodItem = async (
  */
 export const getFoodItem = async (id: number): Promise<IFoodItem | undefined> =>
   await db.fooditem.get(id);
-
-export const getFoodItemByMealType = async (
-  mealType: TMealType,
-  date: string,
-) =>
-  await db.fooditem
-    .where({
-      mealType: mealType,
-      date: dayjs(date).format("YYYY-MM-DD"),
-    })
-    .toArray();

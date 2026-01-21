@@ -1,5 +1,5 @@
 export interface IJournal {
-  id: number;
+  id?: number;
   date: string;
   foodItemIDs: number[];
   totalEnergy: {
