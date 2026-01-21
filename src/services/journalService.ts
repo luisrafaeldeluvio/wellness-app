@@ -14,15 +14,19 @@ export const addJournal = async (journal: IJournal) =>
 export const getJournalByDate = async (date: string) =>
   await db.journal.where({ date: dayjs(date).format("YYYY-MM-DD") }).first();
 
-export const updateJournal = async (journal: IJournal) =>
+export const updateJournal = async (journal: IJournal) => {
+  if (!journal.id) return;
   await db.journal.update(journal.id, {
     id: journal.id,
     date: journal.date,
     foodItemIDs: journal.foodItemIDs,
     totalEnergy: journal.totalEnergy,
   });
+};
 
-const addFoodToJournal = (journal: IJournal, foodItem: IFoodItem) => {
+export const addFoodToJournal = (journal: IJournal, foodItem: IFoodItem) => {
+  if (!foodItem.id) return;
+
   journal.foodItemIDs.push(foodItem.id);
 
   const energy = foodItem.energy;
