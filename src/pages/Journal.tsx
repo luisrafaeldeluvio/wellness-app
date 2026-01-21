@@ -13,7 +13,14 @@ import Header from "../components/ui/Header";
 const Journal = () => {
   const [date, setDate] = useState<Dayjs>(dayjs());
   const [foodItems, setFoodItems] = useState<IFoodItem[]>([]);
-  const [journal, setJournal] = useState<IJournal>();
+  const [journal, setJournal] = useState<IJournal>({
+    date: date.toString(),
+    foodItemIDs: [],
+    totalEnergy: {
+      intake: 0,
+      outflow: 0,
+    },
+  });
 
   useEffect(() => {
     let ignore: boolean = false;
