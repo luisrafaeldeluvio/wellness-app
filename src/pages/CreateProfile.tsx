@@ -1,9 +1,8 @@
 import { useLocation } from "wouter";
-import Button from "../components/ui/Button";
 import Header from "../components/ui/Header";
-import { UserInfo, type IUserInfo } from "../db";
+import { type IUserInfo } from "../db";
 import { useEffect, useState } from "react";
-import { getUser, initUser, updateUser } from "../services/userService";
+import { getEnergyOffset, initUser } from "../services/userService";
 
 const CreateProfile = () => {
   const [, setLocation] = useLocation();
@@ -47,9 +46,9 @@ const CreateProfile = () => {
   useEffect(() => {
     (async () => {
       if (!user) return;
-      const userInfo = new UserInfo(user);
-      userInfo.energyOffset = userInfo.getEnergyOffset();
-      if (await initUser(userInfo)) setLocation("/home");
+
+      user.energyOffset = getEnergyOffset(user);
+      if (await initUser(user)) setLocation("/home");
     })();
   }, [user]);
 
