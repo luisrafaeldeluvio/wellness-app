@@ -1,9 +1,9 @@
 import { useLocation } from "wouter";
 import Button from "../components/ui/Button";
 import Header from "../components/ui/Header";
-import { UserInfo, type IUserInfo } from "../db";
-import { useEffect, useMemo, useState } from "react";
-import { getUser, updateUser } from "../services/userService";
+import { type IUserInfo } from "../db";
+import { useEffect, useState } from "react";
+import { getBMR, getTDEE, getUser, updateUser } from "../services/userService";
 import Accordion from "../components/ui/Accordion";
 
 type TEnegryBalance = "deficit" | "maintenance" | "surplus";
@@ -93,10 +93,6 @@ const Profile = () => {
   const [, setLocation] = useLocation();
   const [user, setUser] = useState<IUserInfo>();
 
-  const userClass = useMemo(() => {
-    return user ? new UserInfo(user) : null;
-  }, [user]);
-
   useEffect(() => {
     let ignore: boolean = false;
 
@@ -104,7 +100,7 @@ const Profile = () => {
       if (user) return;
 
       const userInfo = await getUser();
-      if (userInfo) setUser({ ...userInfo });
+      if (userInfo && !ignore) setUser({ ...userInfo });
     })();
 
     return () => {
@@ -118,8 +114,7 @@ const Profile = () => {
     (async () => {
       if (!user) return;
 
-      const userInfo = new UserInfo(user);
-      await updateUser(userInfo);
+      await updateUser(user);
     })();
 
     return () => {
@@ -239,7 +234,7 @@ const Profile = () => {
           </div>
 
           <div className="text-center">
-            <span className="text-4xl font-bold">{userClass?.weight}</span>kg
+            <span className="text-4xl font-bold">{user.weight}</span>kg
           </div>
         </Block>
 
@@ -250,7 +245,7 @@ const Profile = () => {
           </div>
 
           <div className="text-center">
-            <span className="text-xl font-bold">{userClass?.getBMR()}</span>
+            <span className="text-xl font-bold">{getBMR(user)}</span>
             kcal/day
           </div>
         </Block>
@@ -262,7 +257,7 @@ const Profile = () => {
           </div>
 
           <div className="text-center">
-            <span className="text-4xl font-bold">{userClass?.getTDEE()}</span>
+            <span className="text-4xl font-bold">{getTDEE(user)}</span>
             kcal
           </div>
         </Block>

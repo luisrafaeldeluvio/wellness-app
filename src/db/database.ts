@@ -1,14 +1,14 @@
 import Dexie, { type Table } from "dexie";
 import { type IWeightLog } from "./models/weight";
-import { UserInfo } from "./models/user";
+import { type IUserInfo } from "./models/user";
 import { type IFoodItem } from "./models/foodItem";
-import { Journal } from "./models/journal";
+import { type IJournal } from "./models/journal";
 
 export class AppDB extends Dexie {
-  userinfo!: Table<UserInfo, number>;
+  userinfo!: Table<IUserInfo, number>;
   weightlog!: Table<IWeightLog, number>;
   fooditem!: Table<IFoodItem, number>;
-  journal!: Table<Journal, number>;
+  journal!: Table<IJournal, number>;
 
   constructor() {
     super("userdata");
@@ -18,7 +18,5 @@ export class AppDB extends Dexie {
       fooditem: "++id, date",
       journal: "++id, date",
     });
-    this.userinfo.mapToClass(UserInfo);
-    this.journal.mapToClass(Journal);
   }
 }

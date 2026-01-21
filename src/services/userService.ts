@@ -1,11 +1,44 @@
-import { db, UserInfo } from "../db";
+import { db, type IUserInfo } from "../db";
 
 // USER_KEY represents the primary key for the single user profile in the database.
 const USER_KEY = 1;
 
-export const getUser = async () => await db.userinfo.get(USER_KEY);
+const getUser = async () => await db.userinfo.get(USER_KEY);
 
-export const initUser = async (user: UserInfo) => await db.userinfo.add(user);
+const initUser = async (user: IUserInfo) => await db.userinfo.add(user);
 
-export const updateUser = async (user: UserInfo) =>
+const updateUser = async (user: IUserInfo) =>
   await db.userinfo.update(USER_KEY, user);
+
+// Mifflin-St Jeor's Equation
+const getBMR = (user: IUserInfo) => {
+  const sexMod = user.sex === "male" ? 5 : -161;
+  return 10 * user.weight + 6.25 * user.height - 5 * user.age + sexMod;
+};
+
+const getTDEE = (user: IUserInfo) => getBMR(user) * user.activityLevel;
+
+const getCalorieIntake = (user: IUserInfo) => {
+  const intake: number = getTDEE(user) - user.energyOffset;
+  return Math.max(user.sex === "male" ? 1500 : 1200, intake);
+};
+
+const getEnergyOffset = (user: IUserInfo) => {
+  if (user.energyBalance == "deficit") {
+    return getTDEE(user) * 0.25;
+  } else if (user.energyBalance == "surplus") {
+    return getTDEE(user) * 1.25;
+  } else {
+    return 0;
+  }
+};
+
+export {
+  getUser,
+  initUser,
+  updateUser,
+  getBMR,
+  getTDEE,
+  getCalorieIntake,
+  getEnergyOffset,
+};

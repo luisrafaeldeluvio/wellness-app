@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { addFoodItem } from "../services/foodItemService";
 import { addJournal, getJournalByDate } from "../services/journalService";
-import { Journal } from "../db";
+import { type IJournal } from "../db";
 import { useLocation } from "wouter";
 import Header from "../components/ui/Header";
 import Button from "../components/ui/Button";
@@ -22,7 +22,14 @@ const LogFood = () => {
 
     let journal = await getJournalByDate(journalDate);
     if (journal === undefined) {
-      journal = new Journal(journalDate);
+      journal = {
+        date: dayjs(journalDate).format("YYYY-MM-DD"),
+        foodItemIDs: [],
+        totalEnergy: {
+          intake: 0,
+          outflow: 0,
+        },
+      };
       await addJournal(journal);
     }
 

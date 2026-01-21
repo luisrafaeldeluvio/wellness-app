@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { db, UserInfo, type IWeightLog } from "../db";
+import { db, type IWeightLog } from "../db";
 import { getUser, updateUser } from "./userService";
 
 interface WeightListParams {
@@ -9,11 +9,11 @@ interface WeightListParams {
 }
 
 export const addWeight = async (weightLog: IWeightLog) => {
-  const User = await getUser();
-  if (!User) return;
-  const user = new UserInfo(User);
+  const user = await getUser();
+  if (!user) return;
+
   user.weight = weightLog.weight;
-  updateUser(user);
+  await updateUser(user);
 
   await db.weightlog.add(weightLog);
 };

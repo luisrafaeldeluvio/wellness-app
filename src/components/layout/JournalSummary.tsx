@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { UserInfo, type Journal } from "../../db";
+import { type IUserInfo, type IJournal } from "../../db";
 import Button from "../ui/Button";
-import { getUser } from "../../services/userService";
+import { getCalorieIntake, getUser } from "../../services/userService";
 
 interface JournalProp {
-  data: Journal;
+  data: IJournal;
 }
 
 const JournalSummary = ({ data }: JournalProp) => {
-  const [user, setUser] = useState<UserInfo>();
+  const [user, setUser] = useState<IUserInfo>();
 
   useEffect(() => {
     let ignore: boolean = false;
@@ -17,7 +17,7 @@ const JournalSummary = ({ data }: JournalProp) => {
       if (user) return;
 
       const userInfo = await getUser();
-      if (userInfo) setUser(new UserInfo(userInfo));
+      if (userInfo && !ignore) setUser(userInfo);
     })();
 
     return () => {
@@ -35,7 +35,7 @@ const JournalSummary = ({ data }: JournalProp) => {
               <span className="font-semibold">
                 {data.totalEnergy.intake + data.totalEnergy.outflow + " kcal "}
               </span>
-              {"left of " + user?.getCalorieIntake() + " kcal"}s
+              {"left of " + (user ? getCalorieIntake(user) : 0) + " kcal"}s
             </span>
           </div>
 

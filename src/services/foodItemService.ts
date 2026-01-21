@@ -1,5 +1,5 @@
-import { db, type IFoodItem, Journal } from "../db";
-import { updateJournal } from "./journalService";
+import { db, type IFoodItem, type IJournal } from "../db";
+import { addFoodToJournal } from "./journalService";
 
 /**
  * Adds a new food item entry to the database and updates the associated Journal
@@ -8,13 +8,12 @@ import { updateJournal } from "./journalService";
  * @param fooditem The food data to be added to the database.
  */
 export const addFoodItem = async (
-  journal: Journal,
+  journal: IJournal,
   fooditem: IFoodItem,
 ): Promise<void> => {
-  const foodItemID = await db.fooditem.add(fooditem);
-  journal.addFood(foodItemID, fooditem);
+  await db.fooditem.add(fooditem);
 
-  await updateJournal(journal);
+  addFoodToJournal(journal, fooditem);
 };
 
 /**
