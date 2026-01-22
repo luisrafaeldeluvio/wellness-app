@@ -57,10 +57,10 @@ const Journal = () => {
       <Header>Journal</Header>
       <CalendarHead date={date} setDate={setDate}></CalendarHead>
 
-      <div className="overflow-y-auto">
+      <div className="">
         <JournalSummary data={journal}></JournalSummary>
 
-        <ul className="">
+        <ul className="list-none">
           {foodItems.map((food) => (
             <FoodItem data={food}></FoodItem>
           ))}
