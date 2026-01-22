@@ -3,47 +3,17 @@ import Button from "../components/ui/Button";
 import Header from "../components/ui/Header";
 import { type IUserInfo } from "../db";
 import { useEffect, useState } from "react";
-import { getBMR, getTDEE, getUser, updateUser } from "../services/userService";
+import {
+  getBMR,
+  getEnergyOffset,
+  getTDEE,
+  getUser,
+  updateUser,
+} from "../services/userService";
 import Accordion from "../components/ui/Accordion";
 import Block from "../components/ui/Block";
 
 type TEnegryBalance = "deficit" | "maintenance" | "surplus";
-
-interface SelectOptionProp {
-  title: string;
-  desc: string;
-  value: any;
-  user: IUserInfo | undefined;
-  selected: boolean;
-  x: string;
-  setUser: React.Dispatch<React.SetStateAction<IUserInfo | undefined>>;
-}
-
-const SelectOption = ({
-  title,
-  desc,
-  value,
-  user,
-  selected,
-  x,
-  setUser,
-}: SelectOptionProp) => {
-  return (
-    <li>
-      <button
-        className={`m-2 text-left ${selected ? "rounded-2xl border p-2" : ""}`}
-        type="button"
-        onClick={() => {
-          if (!user) return;
-          setUser({ ...user, [x]: value });
-        }}
-      >
-        <p className="font-bold">{title}</p>
-        <p>{desc}</p>
-      </button>
-    </li>
-  );
-};
 
 const activityLevels = [
   {
@@ -86,6 +56,42 @@ const energyBalances = [
   },
 ];
 
+interface SelectOptionProp {
+  title: string;
+  desc: string;
+  value: any;
+  user: IUserInfo | undefined;
+  selected: boolean;
+  data: string;
+  setUser: React.Dispatch<React.SetStateAction<IUserInfo | undefined>>;
+}
+
+const SelectOption = ({
+  title,
+  desc,
+  value,
+  user,
+  selected,
+  data,
+  setUser,
+}: SelectOptionProp) => {
+  return (
+    <li key={data}>
+      <button
+        className={`m-2 text-left ${selected ? "rounded-2xl border p-2" : ""}`}
+        type="button"
+        onClick={() => {
+          if (!user) return;
+          setUser({ ...user, [data]: value });
+        }}
+      >
+        <p className="font-bold">{title}</p>
+        <p>{desc}</p>
+      </button>
+    </li>
+  );
+};
+
 const Profile = () => {
   const [, setLocation] = useLocation();
   const [user, setUser] = useState<IUserInfo>();
@@ -109,7 +115,7 @@ const Profile = () => {
     let ignore: boolean = false;
 
     (async () => {
-      if (!user) return;
+      if (!user || ignore) return;
 
       await updateUser(user);
     })();
@@ -191,7 +197,7 @@ const Profile = () => {
                     value={Number(value)}
                     user={user}
                     selected={user.activityLevel === value}
-                    x="activityLevel"
+                    data="activityLevel"
                     setUser={setUser}
                   ></SelectOption>
                 );
@@ -201,11 +207,17 @@ const Profile = () => {
 
           <Accordion
             renderHeader={(show) => (
-              <p className={"m-2" + (show ? " mb-4" : "")}>Energy Balance</p>
+              <>
+                <p className={"m-2" + (show ? " mb-4" : "")}>Energy Balance</p>
+                <p className={"m-2" + (show ? " mb-4" : "")}>
+                  {user.energyOffset} kcal
+                </p>
+              </>
             )}
           >
             <div className="flex flex-col">
               {energyBalances.map(({ name, value, desc }) => {
+                user.energyOffset = getEnergyOffset(user);
                 return (
                   <SelectOption
                     title={name}
@@ -213,7 +225,7 @@ const Profile = () => {
                     value={String(value) as TEnegryBalance}
                     user={user}
                     selected={user.energyBalance === value}
-                    x="energyBalance"
+                    data="energyBalance"
                     setUser={setUser}
                   ></SelectOption>
                 );
