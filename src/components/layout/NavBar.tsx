@@ -1,4 +1,7 @@
-import tempIcon from "../../assets/icons/temp_icon.svg";
+import HomeIcon from "../../assets/icons/home_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
+import JournalIcon from "../../assets/icons/menu_book_2_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
+import ReportIcon from "../../assets/icons/analytics_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
+import MenuIcon from "../../assets/icons/menu_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 import { Link, useLocation } from "wouter";
 
 interface NavItemProps {
@@ -37,22 +40,22 @@ export const NavItem = ({
 const NavItems: NavItemProps[] = [
   {
     label: "Home",
-    iconURL: tempIcon,
+    iconURL: HomeIcon,
     href: "/home",
   },
   {
     label: "Journal",
-    iconURL: tempIcon,
+    iconURL: JournalIcon,
     href: "/journal",
   },
   {
     label: "Report",
-    iconURL: tempIcon,
+    iconURL: ReportIcon,
     href: "/report",
   },
   {
     label: "Menu",
-    iconURL: tempIcon,
+    iconURL: MenuIcon,
     href: "/menu",
   },
 ];
