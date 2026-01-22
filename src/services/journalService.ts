@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { db, IFoodItem, IJournal } from "../db";
+import { db, type IFoodItem, type IJournal } from "../db";
 
 /**
  * Adds a journal entry to the DB.

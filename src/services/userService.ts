@@ -1,4 +1,4 @@
-import { db, IUserInfo } from "../db";
+import { db, type IUserInfo } from "../db";
 
 // USER_KEY represents the primary key for the single user profile in the database.
 const USER_KEY = 1;
@@ -19,8 +19,26 @@ const getBMR = (user: IUserInfo) => {
 const getTDEE = (user: IUserInfo) => getBMR(user) * user.activityLevel;
 
 const getCalorieIntake = (user: IUserInfo) => {
-  const intake: number = getTDEE(user) - user.deficit;
+  const intake: number = getTDEE(user) - user.energyOffset;
   return Math.max(user.sex === "male" ? 1500 : 1200, intake);
 };
 
-export { getUser, initUser, updateUser, getBMR, getTDEE, getCalorieIntake };
+const getEnergyOffset = (user: IUserInfo) => {
+  if (user.energyBalance == "deficit") {
+    return getTDEE(user) * 0.25;
+  } else if (user.energyBalance == "surplus") {
+    return getTDEE(user) * 1.25;
+  } else {
+    return 0;
+  }
+};
+
+export {
+  getUser,
+  initUser,
+  updateUser,
+  getBMR,
+  getTDEE,
+  getCalorieIntake,
+  getEnergyOffset,
+};

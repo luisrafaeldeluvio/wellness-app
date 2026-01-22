@@ -1,4 +1,4 @@
-import { db, type IFoodItem, IJournal } from "../db";
+import { db, type IFoodItem, type IJournal } from "../db";
 import { addFoodToJournal } from "./journalService";
 
 /**

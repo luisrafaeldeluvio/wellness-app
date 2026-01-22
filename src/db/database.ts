@@ -1,9 +1,8 @@
-import "fake-indexeddb/auto";
 import Dexie, { type Table } from "dexie";
-import { IWeightLog } from "./models/weight";
-import { IUserInfo } from "./models/user";
+import { type IWeightLog } from "./models/weight";
+import { type IUserInfo } from "./models/user";
 import { type IFoodItem } from "./models/foodItem";
-import { IJournal } from "./models/journal";
+import { type IJournal } from "./models/journal";
 
 export class AppDB extends Dexie {
   userinfo!: Table<IUserInfo, number>;
