@@ -5,12 +5,9 @@ import { type IUserInfo } from "../db";
 import { useEffect, useState } from "react";
 import { getBMR, getTDEE, getUser, updateUser } from "../services/userService";
 import Accordion from "../components/ui/Accordion";
+import Block from "../components/ui/Block";
 
 type TEnegryBalance = "deficit" | "maintenance" | "surplus";
-
-const Block = ({ children }: { children: React.ReactNode }) => {
-  return <div className="aspect-square rounded-3xl border p-2">{children}</div>;
-};
 
 interface SelectOptionProp {
   title: string;
