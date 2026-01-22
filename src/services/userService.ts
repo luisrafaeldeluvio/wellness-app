@@ -13,10 +13,13 @@ const updateUser = async (user: IUserInfo) =>
 // Mifflin-St Jeor's Equation
 const getBMR = (user: IUserInfo) => {
   const sexMod = user.sex === "male" ? 5 : -161;
-  return 10 * user.weight + 6.25 * user.height - 5 * user.age + sexMod;
+  return Math.round(
+    10 * user.weight + 6.25 * user.height - 5 * user.age + sexMod,
+  );
 };
 
-const getTDEE = (user: IUserInfo) => getBMR(user) * user.activityLevel;
+const getTDEE = (user: IUserInfo) =>
+  Math.round(getBMR(user) * user.activityLevel);
 
 const getCalorieIntake = (user: IUserInfo) => {
   const intake: number = getTDEE(user) - user.energyOffset;
@@ -25,9 +28,9 @@ const getCalorieIntake = (user: IUserInfo) => {
 
 const getEnergyOffset = (user: IUserInfo) => {
   if (user.energyBalance == "deficit") {
-    return getTDEE(user) * 0.25;
+    return Math.round(getTDEE(user) * 0.25);
   } else if (user.energyBalance == "surplus") {
-    return getTDEE(user) * 1.25;
+    return Math.round(getTDEE(user) * -0.25);
   } else {
     return 0;
   }
