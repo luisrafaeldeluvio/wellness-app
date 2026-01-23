@@ -2,6 +2,7 @@ import type { IFoodItem } from "../../db/models/foodItem";
 import Button from "../ui/Button";
 import trashIcon from "../../assets/icons/delete_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 import editIcon from "../../assets/icons/edit_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
+import { deleteFoodItem } from "../../services/foodItemService";
 
 interface FoodItemProps {
   data: IFoodItem;
@@ -27,7 +28,13 @@ const FoodItem = ({ data }: FoodItemProps) => {
       </div>
 
       <div className="flex shrink-0 basis-1/4 snap-start items-center justify-center bg-red-500">
-        <Button>
+        <Button
+          onClick={() => {
+            if (window.confirm(`Delete ${data.name}?`)) {
+              if (data) deleteFoodItem(data.id as number);
+            }
+          }}
+        >
           <img src={trashIcon} alt="Delete Entry" />
         </Button>
       </div>

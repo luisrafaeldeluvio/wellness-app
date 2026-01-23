@@ -23,3 +23,5 @@ export const addFoodItem = async (
  */
 export const getFoodItem = async (id: number): Promise<IFoodItem | undefined> =>
   await db.fooditem.get(id);
+
+export const deleteFoodItem = async (id: number) => db.fooditem.delete(id);
