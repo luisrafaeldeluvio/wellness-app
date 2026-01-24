@@ -10,6 +10,7 @@ import { getUser } from "./services/userService";
 import { useEffect } from "react";
 import CreateProfile from "./pages/CreateProfile";
 import LogWeight from "./pages/LogWeight";
+import EditLogFood from "./pages/EditLogFood";
 
 const App = () => {
   const [location, setLocation] = useLocation();
@@ -37,6 +38,9 @@ const App = () => {
           <Route path="/" component={Home}></Route>
           <Route path="/journal" component={Journal}></Route>
           <Route path="/journal/logfood" component={LogFood}></Route>
+          <Route path="/journal/editlogfood/:id">
+            {(params) => <EditLogFood foodId={params.id}></EditLogFood>}
+          </Route>
           <Route path="/menu" component={Menu}></Route>
           <Route path="/report" component={Report}></Route>
           <Route path="/profile" component={Profile}></Route>

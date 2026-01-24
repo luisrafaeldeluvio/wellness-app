@@ -25,3 +25,6 @@ export const getFoodItem = async (id: number): Promise<IFoodItem | undefined> =>
   await db.fooditem.get(id);
 
 export const deleteFoodItem = async (id: number) => db.fooditem.delete(id);
+
+export const editFoodItem = async (id: number, changes: IFoodItem) =>
+  db.fooditem.update(id, changes);
