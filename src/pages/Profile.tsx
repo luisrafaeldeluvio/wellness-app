@@ -12,6 +12,8 @@ import {
 } from "../services/userService";
 import Accordion from "../components/ui/Accordion";
 import Block from "../components/ui/Block";
+import helpIcon from "../assets/icons/help_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
+import addIcon from "../assets/icons/add_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 
 type TEnegryBalance = "deficit" | "maintenance" | "surplus";
 
@@ -158,7 +160,7 @@ const Profile = () => {
           <div className="my-8 flex flex-row justify-between">
             <label htmlFor="age">Age</label>
             <input
-              className="w-1/12"
+              className="text-right"
               type="number"
               id="age"
               name="age"
@@ -170,7 +172,7 @@ const Profile = () => {
           <div className="my-8 flex flex-row justify-between">
             <label htmlFor="height">Height</label>
             <input
-              className="w-1/12"
+              className="text-right"
               type="number"
               id="height"
               name="height"
@@ -179,13 +181,19 @@ const Profile = () => {
                 setUser({ ...user, height: Number(e.target.value) })
               }
             />
+            cm
           </div>
         </fieldset>
 
         <div className="flex flex-col *:my-4">
           <Accordion
             renderHeader={(show) => (
-              <p className={"m-2" + (show ? " mb-4" : "")}>Activity Level</p>
+              <>
+                <p className={"m-2" + (show ? " mb-4" : "")}>Activity Level</p>
+                <p className={"m-2" + (show ? " mb-4" : "")}>
+                  {user.activityLevel}
+                </p>
+              </>
             )}
           >
             <div className="flex flex-col">
@@ -239,7 +247,9 @@ const Profile = () => {
         <Block>
           <div className="flex flex-row items-center justify-between">
             <span className="m-2">Weight</span>
-            <Button onClick={() => setLocation("/logweight")}></Button>
+            <Button style="m-2! p-1!" onClick={() => setLocation("/logweight")}>
+              <img src={addIcon} alt="Log weight" />
+            </Button>
           </div>
 
           <div className="text-center">
@@ -250,7 +260,9 @@ const Profile = () => {
         <Block>
           <div className="flex flex-row items-center justify-between">
             <span className="m-2">BMR</span>
-            <Button></Button>
+            <Button style="m-2! p-1!">
+              <img src={helpIcon} alt="Help" />
+            </Button>
           </div>
 
           <div className="text-center">
@@ -262,7 +274,9 @@ const Profile = () => {
         <Block>
           <div className="flex flex-row items-center justify-between">
             <span className="m-2">TDEE</span>
-            <Button></Button>
+            <Button style="m-2! p-1!">
+              <img src={helpIcon} alt="Help" />
+            </Button>
           </div>
 
           <div className="text-center">
