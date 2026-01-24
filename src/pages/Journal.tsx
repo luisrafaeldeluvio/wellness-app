@@ -9,10 +9,10 @@ import { getJournalByDate } from "../services/journalService";
 import { getFoodItem } from "../services/foodItemService";
 import JournalSummary from "../components/layout/JournalSummary";
 import Header from "../components/ui/Header";
+import { useLiveQuery } from "dexie-react-hooks";
 
 const Journal = () => {
   const [date, setDate] = useState<Dayjs>(dayjs());
-  const [foodItems, setFoodItems] = useState<IFoodItem[]>([]);
   const [journal, setJournal] = useState<IJournal>({
     date: date.toString(),
     foodItemIDs: [],
@@ -21,25 +21,26 @@ const Journal = () => {
       outflow: 0,
     },
   });
+  const foodItems = useLiveQuery(async () => {
+    const journalData = await getJournalByDate(date.toString());
+    if (!journalData) return [];
+
+    const foods = await Promise.all(
+      journalData.foodItemIDs.map((id) => getFoodItem(id)),
+    );
+
+    if (foods)
+      return foods.filter((food): food is IFoodItem => food !== undefined);
+  }, [date]);
 
   useEffect(() => {
     let ignore: boolean = false;
 
     (async () => {
       const journalData = await getJournalByDate(date.toString());
-      setFoodItems([]);
 
       if (!journalData) return;
       setJournal(journalData);
-
-      const foods = await Promise.all(
-        journalData.foodItemIDs.map((id) => getFoodItem(id)),
-      );
-      if (foods) {
-        setFoodItems(
-          foods.filter((food): food is IFoodItem => food !== undefined),
-        );
-      }
     })();
 
     return () => {
@@ -57,11 +58,11 @@ const Journal = () => {
       <Header>Journal</Header>
       <CalendarHead date={date} setDate={setDate}></CalendarHead>
 
-      <div className="">
+      <div>
         <JournalSummary data={journal}></JournalSummary>
 
         <ul className="list-none">
-          {foodItems.map((food) => (
+          {foodItems?.map((food) => (
             <FoodItem data={food}></FoodItem>
           ))}
         </ul>
