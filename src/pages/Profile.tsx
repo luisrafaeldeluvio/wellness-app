@@ -183,9 +183,18 @@ const Profile = () => {
             renderHeader={(show) => (
               <>
                 <p className={"m-2" + (show ? " mb-4" : "")}>Activity Level</p>
-                <p className={"m-2" + (show ? " mb-4" : "")}>
-                  {user.activityLevel}
-                </p>
+
+                <input
+                  className={"m-2 w-1/4 text-right" + (show ? " mb-4" : "")}
+                  type="number"
+                  id="customactivitylevel"
+                  name="customactivitylevel"
+                  defaultValue={user.activityLevel}
+                  onBlur={(e) =>
+                    setUser({ ...user, activityLevel: Number(e.target.value) })
+                  }
+                  onClick={(e) => e.stopPropagation()}
+                />
               </>
             )}
           >
@@ -204,6 +213,17 @@ const Profile = () => {
                   ></SelectOption>
                 );
               })}
+              <li>
+                <button
+                  className={`m-2 text-left ${activityLevels.every(({ value }) => value !== user.activityLevel) ? "rounded-2xl border p-2" : ""}`}
+                  type="button"
+                >
+                  <p className="font-bold">Custom</p>
+                  <p>
+                    For unique lifestyles or specific activities not listed.
+                  </p>
+                </button>
+              </li>
             </div>
           </Accordion>
 
@@ -211,9 +231,18 @@ const Profile = () => {
             renderHeader={(show) => (
               <>
                 <p className={"m-2" + (show ? " mb-4" : "")}>Energy Balance</p>
-                <p className={"m-2" + (show ? " mb-4" : "")}>
-                  {user.energyOffset} kcal
-                </p>
+                <input
+                  className={"m-2 w-1/4 text-right" + (show ? " mb-4" : "")}
+                  type="number"
+                  id="customenergyoffset"
+                  name="customenergyoffset"
+                  defaultValue={user.energyOffset}
+                  onBlur={(e) => {
+                    setUser({ ...user, energyOffset: Number(e.target.value) });
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                />
+                kcal
               </>
             )}
           >
