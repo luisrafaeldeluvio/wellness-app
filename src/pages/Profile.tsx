@@ -61,31 +61,24 @@ const energyBalances = [
 interface SelectOptionProp {
   title: string;
   desc: string;
-  value: any;
-  user: IUserInfo | undefined;
   selected: boolean;
   data: string;
-  setUser: React.Dispatch<React.SetStateAction<IUserInfo | undefined>>;
+  onClick: () => void;
 }
 
 const SelectOption = ({
   title,
   desc,
-  value,
-  user,
   selected,
   data,
-  setUser,
+  onClick,
 }: SelectOptionProp) => {
   return (
     <li key={data}>
       <button
         className={`m-2 text-left ${selected ? "rounded-2xl border p-2" : ""}`}
         type="button"
-        onClick={() => {
-          if (!user) return;
-          setUser({ ...user, [data]: value });
-        }}
+        onClick={() => onClick()}
       >
         <p className="font-bold">{title}</p>
         <p>{desc}</p>
@@ -202,11 +195,12 @@ const Profile = () => {
                   <SelectOption
                     title={name}
                     desc={desc}
-                    value={Number(value)}
-                    user={user}
                     selected={user.activityLevel === value}
                     data="activityLevel"
-                    setUser={setUser}
+                    onClick={() => {
+                      if (!user) return;
+                      setUser({ ...user, activityLevel: value });
+                    }}
                   ></SelectOption>
                 );
               })}
@@ -225,16 +219,20 @@ const Profile = () => {
           >
             <div className="flex flex-col">
               {energyBalances.map(({ name, value, desc }) => {
-                user.energyOffset = getEnergyOffset(user);
                 return (
                   <SelectOption
                     title={name}
                     desc={desc}
-                    value={String(value) as TEnegryBalance}
-                    user={user}
                     selected={user.energyBalance === value}
                     data="energyBalance"
-                    setUser={setUser}
+                    onClick={() => {
+                      if (!user) return;
+                      setUser({
+                        ...user,
+                        energyBalance: value as TEnegryBalance,
+                        energyOffset: getEnergyOffset(user),
+                      });
+                    }}
                   ></SelectOption>
                 );
               })}
