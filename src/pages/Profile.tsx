@@ -186,6 +186,7 @@ const Profile = () => {
 
                 <input
                   className={"m-2 w-1/4 text-right" + (show ? " mb-4" : "")}
+                  key={user.activityLevel}
                   type="number"
                   id="customactivitylevel"
                   name="customactivitylevel"
@@ -234,11 +235,28 @@ const Profile = () => {
                 <input
                   className={"m-2 w-1/4 text-right" + (show ? " mb-4" : "")}
                   type="number"
+                  key={user.energyOffset}
                   id="customenergyoffset"
                   name="customenergyoffset"
                   defaultValue={user.energyOffset}
                   onBlur={(e) => {
-                    setUser({ ...user, energyOffset: Number(e.target.value) });
+                    const offset = Number(e.target.value);
+
+                    let newBalance: TEnegryBalance;
+
+                    if (offset === 0) {
+                      newBalance = "maintenance";
+                    } else if (offset > 0) {
+                      newBalance = "surplus";
+                    } else {
+                      newBalance = "deficit";
+                    }
+
+                    setUser({
+                      ...user,
+                      energyOffset: offset,
+                      energyBalance: newBalance,
+                    });
                   }}
                   onClick={(e) => e.stopPropagation()}
                 />
