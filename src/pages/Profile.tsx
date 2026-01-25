@@ -12,6 +12,8 @@ import {
 } from "../services/userService";
 import Accordion from "../components/ui/Accordion";
 import Block from "../components/ui/Block";
+import helpIcon from "../assets/icons/help_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
+import addIcon from "../assets/icons/add_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 
 type TEnegryBalance = "deficit" | "maintenance" | "surplus";
 
@@ -59,31 +61,24 @@ const energyBalances = [
 interface SelectOptionProp {
   title: string;
   desc: string;
-  value: any;
-  user: IUserInfo | undefined;
   selected: boolean;
   data: string;
-  setUser: React.Dispatch<React.SetStateAction<IUserInfo | undefined>>;
+  onClick: () => void;
 }
 
 const SelectOption = ({
   title,
   desc,
-  value,
-  user,
   selected,
   data,
-  setUser,
+  onClick,
 }: SelectOptionProp) => {
   return (
     <li key={data}>
       <button
         className={`m-2 text-left ${selected ? "rounded-2xl border p-2" : ""}`}
         type="button"
-        onClick={() => {
-          if (!user) return;
-          setUser({ ...user, [data]: value });
-        }}
+        onClick={() => onClick()}
       >
         <p className="font-bold">{title}</p>
         <p>{desc}</p>
@@ -158,7 +153,7 @@ const Profile = () => {
           <div className="my-8 flex flex-row justify-between">
             <label htmlFor="age">Age</label>
             <input
-              className="w-1/12"
+              className="text-right"
               type="number"
               id="age"
               name="age"
@@ -170,7 +165,7 @@ const Profile = () => {
           <div className="my-8 flex flex-row justify-between">
             <label htmlFor="height">Height</label>
             <input
-              className="w-1/12"
+              className="text-right"
               type="number"
               id="height"
               name="height"
@@ -179,13 +174,29 @@ const Profile = () => {
                 setUser({ ...user, height: Number(e.target.value) })
               }
             />
+            cm
           </div>
         </fieldset>
 
         <div className="flex flex-col *:my-4">
           <Accordion
             renderHeader={(show) => (
-              <p className={"m-2" + (show ? " mb-4" : "")}>Activity Level</p>
+              <>
+                <p className={"m-2" + (show ? " mb-4" : "")}>Activity Level</p>
+
+                <input
+                  className={"m-2 w-1/4 text-right" + (show ? " mb-4" : "")}
+                  key={user.activityLevel}
+                  type="number"
+                  id="customactivitylevel"
+                  name="customactivitylevel"
+                  defaultValue={user.activityLevel}
+                  onBlur={(e) =>
+                    setUser({ ...user, activityLevel: Number(e.target.value) })
+                  }
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </>
             )}
           >
             <div className="flex flex-col">
@@ -194,14 +205,26 @@ const Profile = () => {
                   <SelectOption
                     title={name}
                     desc={desc}
-                    value={Number(value)}
-                    user={user}
                     selected={user.activityLevel === value}
                     data="activityLevel"
-                    setUser={setUser}
+                    onClick={() => {
+                      if (!user) return;
+                      setUser({ ...user, activityLevel: value });
+                    }}
                   ></SelectOption>
                 );
               })}
+              <li>
+                <button
+                  className={`m-2 text-left ${activityLevels.every(({ value }) => value !== user.activityLevel) ? "rounded-2xl border p-2" : ""}`}
+                  type="button"
+                >
+                  <p className="font-bold">Custom</p>
+                  <p>
+                    For unique lifestyles or specific activities not listed.
+                  </p>
+                </button>
+              </li>
             </div>
           </Accordion>
 
@@ -209,24 +232,54 @@ const Profile = () => {
             renderHeader={(show) => (
               <>
                 <p className={"m-2" + (show ? " mb-4" : "")}>Energy Balance</p>
-                <p className={"m-2" + (show ? " mb-4" : "")}>
-                  {user.energyOffset} kcal
-                </p>
+                <input
+                  className={"m-2 w-1/4 text-right" + (show ? " mb-4" : "")}
+                  type="number"
+                  key={user.energyOffset}
+                  id="customenergyoffset"
+                  name="customenergyoffset"
+                  defaultValue={user.energyOffset}
+                  onBlur={(e) => {
+                    const offset = Number(e.target.value);
+
+                    let newBalance: TEnegryBalance;
+
+                    if (offset === 0) {
+                      newBalance = "maintenance";
+                    } else if (offset > 0) {
+                      newBalance = "surplus";
+                    } else {
+                      newBalance = "deficit";
+                    }
+
+                    setUser({
+                      ...user,
+                      energyOffset: offset,
+                      energyBalance: newBalance,
+                    });
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                />
+                kcal
               </>
             )}
           >
             <div className="flex flex-col">
               {energyBalances.map(({ name, value, desc }) => {
-                user.energyOffset = getEnergyOffset(user);
                 return (
                   <SelectOption
                     title={name}
                     desc={desc}
-                    value={String(value) as TEnegryBalance}
-                    user={user}
                     selected={user.energyBalance === value}
                     data="energyBalance"
-                    setUser={setUser}
+                    onClick={() => {
+                      if (!user) return;
+                      setUser({
+                        ...user,
+                        energyBalance: value as TEnegryBalance,
+                        energyOffset: getEnergyOffset(user),
+                      });
+                    }}
                   ></SelectOption>
                 );
               })}
@@ -239,7 +292,9 @@ const Profile = () => {
         <Block>
           <div className="flex flex-row items-center justify-between">
             <span className="m-2">Weight</span>
-            <Button onClick={() => setLocation("/logweight")}></Button>
+            <Button style="m-2! p-1!" onClick={() => setLocation("/logweight")}>
+              <img src={addIcon} alt="Log weight" />
+            </Button>
           </div>
 
           <div className="text-center">
@@ -250,7 +305,9 @@ const Profile = () => {
         <Block>
           <div className="flex flex-row items-center justify-between">
             <span className="m-2">BMR</span>
-            <Button></Button>
+            <Button style="m-2! p-1!">
+              <img src={helpIcon} alt="Help" />
+            </Button>
           </div>
 
           <div className="text-center">
@@ -262,7 +319,9 @@ const Profile = () => {
         <Block>
           <div className="flex flex-row items-center justify-between">
             <span className="m-2">TDEE</span>
-            <Button></Button>
+            <Button style="m-2! p-1!">
+              <img src={helpIcon} alt="Help" />
+            </Button>
           </div>
 
           <div className="text-center">
