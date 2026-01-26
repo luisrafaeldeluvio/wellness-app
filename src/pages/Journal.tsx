@@ -5,7 +5,7 @@ import type { IFoodItem } from "../db/models/foodItem";
 import FoodItem from "../components/layout/FoodItem";
 import { type IJournal } from "../db";
 import { getJournalByDate } from "../services/journalService";
-import { getFoodItem } from "../services/foodItemService";
+import { bulkGetFoodItem, getFoodItem } from "../services/foodItemService";
 import JournalSummary from "../components/layout/JournalSummary";
 import Header from "../components/ui/Header";
 import { useLiveQuery } from "dexie-react-hooks";
@@ -32,9 +32,7 @@ const Journal = () => {
     const journalData = await getJournalByDate(date.toString());
     if (!journalData) return;
 
-    const foods = await Promise.all(
-      journalData.foodItemIDs.map((id) => getFoodItem(id)),
-    );
+    const foods = await bulkGetFoodItem(journalData.foodItemIDs);
 
     if (foods)
       return {
@@ -65,7 +63,7 @@ const Journal = () => {
         </ul>
       </div>
 
-      <LogFoodButton></LogFoodButton>
+      <LogFoodButton date={date}></LogFoodButton>
     </>
   );
 };
