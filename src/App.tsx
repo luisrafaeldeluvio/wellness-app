@@ -37,11 +37,12 @@ const App = () => {
       <main className="relative flex h-[calc(100dvh-(var(--spacing)*18))] grow flex-col overflow-y-auto">
         <Switch>
           <Route path="/" component={Home}></Route>
-          <Route path="/journal/:date" component={Journal}></Route>
           <Route path="/journal/logfood" component={LogFood}></Route>
           <Route path="/journal/editlogfood/:id">
             {(params) => <EditLogFood foodId={params.id}></EditLogFood>}
           </Route>
+          <Route path="/journal/:date" component={Journal}></Route>
+
           <Route path="/menu" component={Menu}></Route>
           <Route path="/report" component={Report}></Route>
           <Route path="/profile" component={Profile}></Route>
