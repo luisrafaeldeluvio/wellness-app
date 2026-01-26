@@ -1,14 +1,19 @@
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { addFoodItem } from "../services/foodItemService";
 import { addJournal, getJournalByDate } from "../services/journalService";
-import { type IJournal } from "../db";
-import { useLocation } from "wouter";
+import { useLocation, useParams } from "wouter";
 import Header from "../components/ui/Header";
 import Button from "../components/ui/Button";
 import checkIcon from "../assets/icons/check_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 
+interface DateParams {
+  date: string;
+}
+
 const LogFood = () => {
   const [, setLocation] = useLocation();
+  const dateParams = useParams<DateParams>();
+  const date: Dayjs = dayjs(dateParams.date);
 
   async function addFoodItemFromForm(data: FormData) {
     const journalDate = data.get("journalDate") as string | null;
@@ -39,13 +44,16 @@ const LogFood = () => {
       energy: energy,
     });
 
-    setLocation("/journal");
+    setLocation(`/journal/${dayjs(journalDate).format("YYYY-MM-DD")}`);
   }
 
   return (
     <>
       <div className="flex flex-row items-center">
-        <Button onClick={() => setLocation("/journal")} style="mr-0">
+        <Button
+          onClick={() => setLocation(`/journal/${date.format("YYYY-MM-DD")}`)}
+          style="mr-0"
+        >
           Back
         </Button>
         <Header>Log Food</Header>
@@ -64,7 +72,7 @@ const LogFood = () => {
               type="date"
               name="journalDate"
               id="journalDate"
-              defaultValue={dayjs().format("YYYY-MM-DD")}
+              defaultValue={date.format("YYYY-MM-DD")}
               required
             />
           </div>
