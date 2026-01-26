@@ -1,5 +1,5 @@
 import { NavBar } from "./components/layout/NavBar";
-import { Route, Switch, Redirect, useLocation } from "wouter";
+import { Route, Switch, Redirect, useLocation, useParams } from "wouter";
 import Home from "./pages/Home";
 import Journal from "./pages/Journal";
 import Menu from "./pages/Menu";
@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import CreateProfile from "./pages/CreateProfile";
 import LogWeight from "./pages/LogWeight";
 import EditLogFood from "./pages/EditLogFood";
+import dayjs from "dayjs";
 
 const App = () => {
   const [location, setLocation] = useLocation();
@@ -36,7 +37,7 @@ const App = () => {
       <main className="relative flex h-[calc(100dvh-(var(--spacing)*18))] grow flex-col overflow-y-auto">
         <Switch>
           <Route path="/" component={Home}></Route>
-          <Route path="/journal" component={Journal}></Route>
+          <Route path="/journal/:date" component={Journal}></Route>
           <Route path="/journal/logfood" component={LogFood}></Route>
           <Route path="/journal/editlogfood/:id">
             {(params) => <EditLogFood foodId={params.id}></EditLogFood>}

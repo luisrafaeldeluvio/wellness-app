@@ -3,6 +3,7 @@ import JournalIcon from "../../assets/icons/menu_book_2_24dp_000000_FILL0_wght20
 import ReportIcon from "../../assets/icons/analytics_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 import MenuIcon from "../../assets/icons/menu_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 import { Link, useLocation } from "wouter";
+import dayjs from "dayjs";
 
 interface NavItemProps {
   label: string;
@@ -46,7 +47,7 @@ const NavItems: NavItemProps[] = [
   {
     label: "Journal",
     iconURL: JournalIcon,
-    href: "/journal",
+    href: `/journal/${dayjs().format("YYYY-MM-DD")}`,
   },
   {
     label: "Report",
