@@ -53,10 +53,10 @@ const Journal = () => {
       <Header>Journal</Header>
       <CalendarHead date={date}></CalendarHead>
 
-      <div>
+      <div className="flex-1 overflow-y-auto">
         <JournalSummary data={journal}></JournalSummary>
 
-        <ul className="list-none">
+        <ul className="list-none overflow-scroll">
           {foodItems?.map((food) => (
             <FoodItem data={food}></FoodItem>
           ))}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { type IUserInfo, type IJournal } from "../../db";
 import Button from "../ui/Button";
 import { getCalorieIntake, getUser } from "../../services/userService";
+import addIcon from "../../assets/icons/add_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 
 interface JournalProp {
   data: IJournal;
@@ -40,7 +41,7 @@ const JournalSummary = ({ data }: JournalProp) => {
           </div>
 
           <Button style="m-0!">
-            <img src="src/assets/icons/add_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg" />
+            <img src={addIcon} />
           </Button>
         </div>
 

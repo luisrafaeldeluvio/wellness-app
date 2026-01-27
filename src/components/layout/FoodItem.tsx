@@ -5,6 +5,7 @@ import editIcon from "../../assets/icons/edit_24dp_000000_FILL0_wght200_GRAD0_op
 import { deleteFoodItem } from "../../services/foodItemService";
 import { Link } from "wouter";
 import { useEffect, useRef } from "react";
+import tempIcon from "../../assets/icons/temp_icon.svg";
 
 interface FoodItemProps {
   data: IFoodItem;
@@ -34,7 +35,7 @@ const FoodItem = ({ data }: FoodItemProps) => {
         ref={midRef}
         className="flex shrink-0 basis-full snap-center items-center justify-center"
       >
-        <img className="m-2 size-12" src="src\assets\icons\temp_icon.svg" />
+        <img className="m-2 size-12" src={tempIcon} />
         <span>{data.name}</span>
         <span className="ml-auto p-4">{data.energy} kcal</span>
       </div>
