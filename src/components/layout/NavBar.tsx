@@ -19,7 +19,7 @@ export const NavItem = ({
   isActive = false,
 }: NavItemProps) => {
   const activeClasses: string = isActive
-    ? "relative before:absolute before:-inset-2 before:-inset-x-6 before:rounded-4xl before:border"
+    ? "relative before:absolute before:-inset-1 before:-inset-x-4 before:rounded-4xl before:border"
     : "";
 
   const textClasses: string = isActive ? "font-semibold" : "";
@@ -27,12 +27,12 @@ export const NavItem = ({
     <li>
       <Link
         href={href}
-        className="flex flex-col items-center justify-center p-4"
+        className="flex flex-col items-center justify-center p-2"
       >
-        <div className={activeClasses + " mb-2"}>
+        <div className={activeClasses}>
           <img src={iconURL} />
         </div>
-        <span className={textClasses}>{label}</span>
+        <span className={textClasses + " pt-1 text-sm"}>{label}</span>
       </Link>
     </li>
   );
@@ -65,8 +65,8 @@ export const NavBar = () => {
   const [location] = useLocation();
 
   return (
-    <nav className="h-18 w-full border-t border-t-black">
-      <ul className="flex justify-around">
+    <nav className="h-16 w-full border-t border-t-black">
+      <ul className="flex items-center justify-around">
         {NavItems.map((item) => (
           <NavItem
             label={item.label}

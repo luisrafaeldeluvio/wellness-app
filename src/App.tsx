@@ -34,7 +34,7 @@ const App = () => {
 
   return (
     <div className="flex flex-col overflow-hidden">
-      <main className="relative flex h-[calc(100dvh-(var(--spacing)*18))] grow flex-col overflow-y-auto">
+      <main className="relative flex h-[calc(100dvh-(var(--spacing)*16))] grow flex-col overflow-y-auto">
         <Switch>
           <Route path="/" component={Home}></Route>
           <Route path="/journal/logfood/:date" component={LogFood}></Route>
