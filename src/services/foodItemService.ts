@@ -1,4 +1,4 @@
-import { db, type IFoodItem, type IJournal } from "../db";
+import { db, type FoodItem, type IJournal } from "../db";
 import { addFoodToJournal } from "./journalService";
 
 /**
@@ -9,7 +9,7 @@ import { addFoodToJournal } from "./journalService";
  */
 export const addFoodItem = async (
   journal: IJournal,
-  fooditem: IFoodItem,
+  fooditem: FoodItem,
 ): Promise<void> => {
   await db.fooditem.add(fooditem);
 
@@ -21,7 +21,7 @@ export const addFoodItem = async (
  * @param id The ID of the food item.
  * @returns A promise that resolves to a food item object or undefined if no entry is found with the given id.
  */
-export const getFoodItem = async (id: number): Promise<IFoodItem | undefined> =>
+export const getFoodItem = async (id: number): Promise<FoodItem | undefined> =>
   await db.fooditem.get(id);
 
 export const bulkGetFoodItem = async (ids: number[]) =>
@@ -29,5 +29,5 @@ export const bulkGetFoodItem = async (ids: number[]) =>
 
 export const deleteFoodItem = async (id: number) => db.fooditem.delete(id);
 
-export const editFoodItem = async (id: number, changes: IFoodItem) =>
+export const editFoodItem = async (id: number, changes: FoodItem) =>
   db.fooditem.update(id, changes);

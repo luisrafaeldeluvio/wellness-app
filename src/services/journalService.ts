@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { db, type IFoodItem, type IJournal } from "../db";
+import { db, type FoodItem, type IJournal } from "../db";
 
 /**
  * Adds a journal entry to the DB.
@@ -24,7 +24,7 @@ export const updateJournal = async (journal: IJournal) => {
   });
 };
 
-export const addFoodToJournal = (journal: IJournal, foodItem: IFoodItem) => {
+export const addFoodToJournal = (journal: IJournal, foodItem: FoodItem) => {
   if (!foodItem.id) return;
 
   journal.foodItemIDs.push(foodItem.id);
