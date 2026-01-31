@@ -1,10 +1,10 @@
 import dayjs, { Dayjs } from "dayjs";
-import { addFoodItem } from "../services/foodItemService";
-import { addJournal, getJournalByDate } from "../services/journalService";
+import { addFoodItem } from "../../services/foodItemService";
+import { addJournal, getJournalByDate } from "../../services/journalService";
 import { useLocation, useParams } from "wouter";
-import Header from "../components/ui/Header";
-import Button from "../components/ui/Button";
-import checkIcon from "../assets/icons/check_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
+import Header from "../../components/ui/Header";
+import Button from "../../components/ui/Button";
+import checkIcon from "../../assets/icons/check_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 
 interface DateParams {
   date: string;
@@ -41,7 +41,12 @@ const LogFood = () => {
     await addFoodItem(journal, {
       date: journalDate,
       name: foodName,
-      energy: energy,
+      code: "123",
+      serving_size: "10ggg",
+      consumed_g: 120,
+      nutriments: {
+        "energy-kcal_100g": 100,
+      },
     });
 
     setLocation(`/journal/${dayjs(journalDate).format("YYYY-MM-DD")}`);

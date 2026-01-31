@@ -1,16 +1,16 @@
 import { NavBar } from "./components/layout/NavBar";
 import { Route, Switch, Redirect, useLocation, useParams } from "wouter";
 import Home from "./pages/Home";
-import Journal from "./pages/Journal";
+import Journal from "./pages/journal/Journal";
 import Menu from "./pages/Menu";
 import Report from "./pages/Report";
-import LogFood from "./pages/LogFood";
+import LogFood from "./pages/journal/LogFood";
 import Profile from "./pages/Profile";
 import { getUser } from "./services/userService";
 import { useEffect } from "react";
 import CreateProfile from "./pages/CreateProfile";
 import LogWeight from "./pages/LogWeight";
-import EditLogFood from "./pages/EditLogFood";
+import EditLogFood from "./pages/journal/EditLogFood";
 import dayjs from "dayjs";
 
 const App = () => {
