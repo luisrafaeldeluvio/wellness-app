@@ -1,17 +1,20 @@
-import type { IFoodItem } from "../../db/models/foodItem";
+import type { FoodItem } from "../../db/models/foodItem";
 import Button from "../ui/Button";
 import trashIcon from "../../assets/icons/delete_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 import editIcon from "../../assets/icons/edit_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
-import { deleteFoodItem } from "../../services/foodItemService";
+import {
+  deleteFoodItem,
+  normalizeNutriment,
+} from "../../services/foodItemService";
 import { Link } from "wouter";
 import { useEffect, useRef } from "react";
 import tempIcon from "../../assets/icons/temp_icon.svg";
 
 interface FoodItemProps {
-  data: IFoodItem;
+  data: FoodItem;
 }
 
-const FoodItem = ({ data }: FoodItemProps) => {
+const JournalItem = ({ data }: FoodItemProps) => {
   const midRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -37,7 +40,14 @@ const FoodItem = ({ data }: FoodItemProps) => {
       >
         <img className="m-2 size-12" src={tempIcon} />
         <span>{data.name}</span>
-        <span className="ml-auto p-4">{data.energy} kcal</span>
+        <span className="ml-auto p-4">
+          {normalizeNutriment({
+            nutriment: data.nutriments["energy-kcal_100g"],
+            consumed_g: data.consumed_g,
+            decimal: 0,
+          })}{" "}
+          kcal
+        </span>
       </div>
 
       <div className="flex shrink-0 basis-1/4 snap-start items-center justify-center bg-red-500">
@@ -55,4 +65,4 @@ const FoodItem = ({ data }: FoodItemProps) => {
   );
 };
 
-export default FoodItem;
+export default JournalItem;
