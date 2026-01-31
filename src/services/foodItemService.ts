@@ -31,3 +31,13 @@ export const deleteFoodItem = async (id: number) => db.fooditem.delete(id);
 
 export const editFoodItem = async (id: number, changes: FoodItem) =>
   db.fooditem.update(id, changes);
+
+export const normalizeNutriment = ({
+  nutriment,
+  consumed_g,
+  decimal,
+}: {
+  nutriment: number;
+  consumed_g: number;
+  decimal?: number;
+}) => Number(((consumed_g / 100) * nutriment).toFixed(decimal ?? 2));

@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { db, type FoodItem, type IJournal } from "../db";
+import { normalizeNutriment } from "./foodItemService";
 
 /**
  * Adds a journal entry to the DB.
@@ -29,7 +30,12 @@ export const addFoodToJournal = (journal: IJournal, foodItem: FoodItem) => {
 
   journal.foodItemIDs.push(foodItem.id);
 
-  const energy = foodItem.energy;
+  const energy = normalizeNutriment({
+    nutriment: foodItem.nutriments["energy-kcal_100g"],
+    consumed_g: foodItem.consumed_g,
+    decimal: 0,
+  });
+
   if (energy < 0) {
     journal.totalEnergy.outflow += energy;
   } else {
