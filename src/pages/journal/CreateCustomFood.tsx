@@ -10,7 +10,54 @@ interface DateParams {
   date: string;
 }
 
-const LogFood = () => {
+interface LabeledInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  containerClassName?: string;
+  label: string;
+  unit?: string;
+  inputClassName?: string;
+}
+
+const LabeledInput = ({
+  containerClassName,
+  label,
+  unit,
+  inputClassName,
+  type,
+  name,
+  id,
+  ...rest
+}: LabeledInputProps) => {
+  return (
+    <div
+      className={`my-8 flex flex-row items-center justify-between ${containerClassName}`}
+    >
+      <label htmlFor={id}>{label}</label>
+      <div>
+        <input
+          className={`w-16 text-right ${inputClassName}`}
+          type={type}
+          name={name}
+          id={id}
+          {...rest}
+        />
+        {unit}
+      </div>
+    </div>
+  );
+};
+
+const nutrimentsInput = [
+  { label: "Energy", id: "energy-kcal_100g", unit: "kcal" },
+  { label: "Proteins", id: "proteins100g", unit: "g" },
+  { label: "Carbohydrates", id: "carbohydrates100g", unit: "g" },
+  { label: "Total Fat", id: "fat100g", unit: "g" },
+  { label: "Sugars", id: "sugars_100g", unit: "g" },
+  { label: "Saturated Fat", id: "saturated-fat_100g", unit: "g" },
+  { label: "Fiber", id: "fiber_100g", unit: "g" },
+  { label: "Sodium", id: "sodium_100g", unit: "g" },
+];
+
+const CreateCustomFood = () => {
   const [, setLocation] = useLocation();
   const dateParams = useParams<DateParams>();
   const date: Dayjs = dayjs(dateParams.date);
@@ -70,42 +117,59 @@ const LogFood = () => {
         className="m-4"
       >
         <fieldset>
-          <div className="my-8 mt-0! flex flex-row justify-between">
-            <label htmlFor="journalDate">Date</label>
-            <input
-              type="date"
-              name="journalDate"
-              id="journalDate"
-              defaultValue={date.format("YYYY-MM-DD")}
-              required
-            />
-          </div>
+          <LabeledInput
+            inputClassName="w-32"
+            containerClassName="mt-0!"
+            label="Date"
+            type="date"
+            name="journalDate"
+            id="journalDate"
+            defaultValue={date.format("YYYY-MM-DD")}
+            required
+          ></LabeledInput>
 
-          <div className="my-8 flex flex-row justify-between">
-            <label htmlFor="foodName">Name</label>
-            <input
-              className="text-right"
-              type="text"
-              name="foodName"
-              id="foodName"
-              required
-            />
-          </div>
+          <LabeledInput
+            inputClassName="w-32"
+            label="Name"
+            type="text"
+            name="foodName"
+            id="foodName"
+            required
+          ></LabeledInput>
 
-          <div className="my-8 flex flex-row justify-between">
-            <label htmlFor="energy">Energy</label>
-            <input
-              className="text-right"
-              type="number"
-              name="energy"
-              id="energy"
-              required
-            />
-            kcal
-          </div>
+          <LabeledInput
+            inputClassName="w-32"
+            label="Serving Size"
+            type="text"
+            name="servingSize"
+            id="servingSize"
+            required
+          />
+
+          <LabeledInput
+            label="Consumed"
+            type="number"
+            name="consumedg"
+            id="consumedg"
+            unit="g"
+            required
+          />
         </fieldset>
 
-        <Button style="absolute right-0 bottom-0 m-4 rounded-xl border bg-white p-2">
+        <fieldset>
+          {nutrimentsInput.map(({ label, id, unit }) => (
+            <LabeledInput
+              label={label}
+              type="number"
+              name={id}
+              id={id}
+              unit={unit}
+              required
+            />
+          ))}
+        </fieldset>
+
+        <Button style=" m-4 rounded-xl border bg-white p-2">
           <input
             type="image"
             className="flex size-9 items-center justify-center"
@@ -117,4 +181,4 @@ const LogFood = () => {
   );
 };
 
-export default LogFood;
+export default CreateCustomFood;

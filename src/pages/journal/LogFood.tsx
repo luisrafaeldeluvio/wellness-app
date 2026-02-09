@@ -1,9 +1,10 @@
 import dayjs, { Dayjs } from "dayjs";
-import { useLocation, useParams } from "wouter";
+import { Link, useLocation, useParams } from "wouter";
 import Header from "../../components/ui/Header";
 import Button from "../../components/ui/Button";
 import searchIcon from "../../assets/icons/search_24dp_000000_FILL1_wght200_GRAD0_opsz24.svg";
 import barcodeIcon from "../../assets/icons/barcode_scanner_24dp_000000_FILL1_wght200_GRAD0_opsz24.svg";
+import addIcon from "../../assets/icons/add_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 
 interface DateParams {
   date: string;
@@ -48,6 +49,12 @@ const LogFood = () => {
           <img src={barcodeIcon} alt="Scan a barcode" />
         </Button>
       </div>
+
+      <Link href={`/journal/logfood/create`}>
+        <button className="absolute right-0 bottom-0 m-4 rounded-xl border bg-white p-2">
+          <img src={addIcon} className="size-9" />
+        </button>
+      </Link>
     </>
   );
 };

@@ -12,6 +12,7 @@ import CreateProfile from "./pages/CreateProfile";
 import LogWeight from "./pages/LogWeight";
 import EditLogFood from "./pages/journal/EditLogFood";
 import dayjs from "dayjs";
+import CreateCustomFood from "./pages/journal/CreateCustomFood";
 
 const App = () => {
   const [location, setLocation] = useLocation();
@@ -37,6 +38,10 @@ const App = () => {
       <main className="relative flex h-[calc(100dvh-(var(--spacing)*16))] grow flex-col overflow-y-auto">
         <Switch>
           <Route path="/" component={Home}></Route>
+          <Route
+            path="/journal/logfood/create"
+            component={CreateCustomFood}
+          ></Route>
           <Route path="/journal/logfood/:date" component={LogFood}></Route>
           <Route path="/journal/editlogfood/:id">
             {(params) => <EditLogFood foodId={params.id}></EditLogFood>}
