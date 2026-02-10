@@ -48,9 +48,9 @@ const LabeledInput = ({
 
 const nutrimentsInput = [
   { label: "Energy", id: "energy-kcal_100g", unit: "kcal" },
-  { label: "Proteins", id: "proteins100g", unit: "g" },
-  { label: "Carbohydrates", id: "carbohydrates100g", unit: "g" },
-  { label: "Total Fat", id: "fat100g", unit: "g" },
+  { label: "Proteins", id: "proteins_100g", unit: "g" },
+  { label: "Carbohydrates", id: "carbohydrates_100g", unit: "g" },
+  { label: "Total Fat", id: "fat_100g", unit: "g" },
   { label: "Sugars", id: "sugars_100g", unit: "g" },
   { label: "Saturated Fat", id: "saturated-fat_100g", unit: "g" },
   { label: "Fiber", id: "fiber_100g", unit: "g" },
@@ -63,19 +63,42 @@ const CreateCustomFood = () => {
   const date: Dayjs = dayjs(dateParams.date);
 
   async function addFoodItemFromForm(data: FormData) {
-    const journalDate = data.get("journalDate") as string | null;
-    const foodName = data.get("foodName") as string | null;
-    const energy = data.get("energy") ? Number(data.get("energy")) : null;
+    const parseNum = (key: string) => {
+      const value = data.get(key);
+      return value !== null && value !== "" ? Number(value) : undefined;
+    };
 
-    if (!journalDate || !foodName || !energy) {
+    const formData = {
+      date: data.get("journalDate") as string,
+      name: data.get("foodName") as string,
+      servingSize: data.get("servingSize") as string,
+      consumed_g: parseNum("consumedg") as number,
+
+      "energy-kcal_100g": parseNum("energy-kcal_100g") as number,
+      proteins_100g: parseNum("proteins_100g"),
+      carbohydrates_100g: parseNum("carbohydrates_100g"),
+      sugars_100g: parseNum("sugars_100g"),
+      fat_100g: parseNum("fat_100g"),
+      "saturated-fat_100g": parseNum("saturated-fat_100g"),
+      fiber_100g: parseNum("fiber_100g"),
+      sodium_100g: parseNum("sodium_100g"),
+    };
+
+    if (
+      !formData.date ||
+      !formData.name ||
+      !formData.servingSize ||
+      !formData.consumed_g ||
+      !formData["energy-kcal_100g"]
+    ) {
       console.error("No data in form");
       return;
     }
 
-    let journal = await getJournalByDate(journalDate);
+    let journal = await getJournalByDate(formData.date);
     if (journal === undefined) {
       journal = {
-        date: dayjs(journalDate).format("YYYY-MM-DD"),
+        date: dayjs(formData.date).format("YYYY-MM-DD"),
         foodItemIDs: [],
         totalEnergy: {
           intake: 0,
@@ -86,17 +109,24 @@ const CreateCustomFood = () => {
     }
 
     await addFoodItem(journal, {
-      date: journalDate,
-      name: foodName,
-      code: "123",
-      serving_size: "10ggg",
-      consumed_g: 120,
+      date: formData.date,
+      name: formData.name,
+      code: "CUSTOM_FOOD",
+      serving_size: formData.servingSize,
+      consumed_g: formData.consumed_g,
       nutriments: {
-        "energy-kcal_100g": 100,
+        "energy-kcal_100g": formData["energy-kcal_100g"],
+        proteins_100g: formData.proteins_100g,
+        carbohydrates_100g: formData.carbohydrates_100g,
+        sugars_100g: formData.sugars_100g,
+        fat_100g: formData.fat_100g,
+        "saturated-fat_100g": formData["saturated-fat_100g"],
+        fiber_100g: formData.fiber_100g,
+        sodium_100g: formData.sodium_100g,
       },
     });
 
-    setLocation(`/journal/${dayjs(journalDate).format("YYYY-MM-DD")}`);
+    setLocation(`/journal/${dayjs(formData.date).format("YYYY-MM-DD")}`);
   }
 
   return (
