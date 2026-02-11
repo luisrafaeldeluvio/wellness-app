@@ -5,6 +5,7 @@ import { useLocation, useParams } from "wouter";
 import Header from "../../components/ui/Header";
 import Button from "../../components/ui/Button";
 import checkIcon from "../../assets/icons/check_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
+import FoodInfo from "../../components/layout/FoodInfo";
 
 interface DateParams {
   date: string;
@@ -69,10 +70,10 @@ const CreateCustomFood = () => {
     };
 
     const formData = {
-      date: data.get("journalDate") as string,
-      name: data.get("foodName") as string,
-      servingSize: data.get("servingSize") as string,
-      consumed_g: parseNum("consumedg") as number,
+      date: data.get("date") as string,
+      name: data.get("name") as string,
+      servingSize: data.get("serving_size") as string,
+      consumed_g: parseNum("consumed_g") as number,
 
       "energy-kcal_100g": parseNum("energy-kcal_100g") as number,
       proteins_100g: parseNum("proteins_100g"),
@@ -146,58 +147,11 @@ const CreateCustomFood = () => {
         autoComplete="on"
         className="m-4"
       >
-        <fieldset>
-          <LabeledInput
-            inputClassName="w-32"
-            containerClassName="mt-0!"
-            label="Date"
-            type="date"
-            name="journalDate"
-            id="journalDate"
-            defaultValue={date.format("YYYY-MM-DD")}
-            required
-          ></LabeledInput>
-
-          <LabeledInput
-            inputClassName="w-32"
-            label="Name"
-            type="text"
-            name="foodName"
-            id="foodName"
-            required
-          ></LabeledInput>
-
-          <LabeledInput
-            inputClassName="w-32"
-            label="Serving Size"
-            type="text"
-            name="servingSize"
-            id="servingSize"
-            required
-          />
-
-          <LabeledInput
-            label="Consumed"
-            type="number"
-            name="consumedg"
-            id="consumedg"
-            unit="g"
-            required
-          />
-        </fieldset>
-
-        <fieldset>
-          {nutrimentsInput.map(({ label, id, unit }) => (
-            <LabeledInput
-              label={label}
-              type="number"
-              name={id}
-              id={id}
-              unit={unit}
-              required
-            />
-          ))}
-        </fieldset>
+        <FoodInfo
+          defaultValue={{
+            date: date.format("YYYY-MM-DD"),
+          }}
+        ></FoodInfo>
 
         <Button style=" m-4 rounded-xl border bg-white p-2">
           <input
