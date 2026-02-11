@@ -11,57 +11,9 @@ interface DateParams {
   date: string;
 }
 
-interface LabeledInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  containerClassName?: string;
-  label: string;
-  unit?: string;
-  inputClassName?: string;
-}
-
-const LabeledInput = ({
-  containerClassName,
-  label,
-  unit,
-  inputClassName,
-  type,
-  name,
-  id,
-  ...rest
-}: LabeledInputProps) => {
-  return (
-    <div
-      className={`my-8 flex flex-row items-center justify-between ${containerClassName}`}
-    >
-      <label htmlFor={id}>{label}</label>
-      <div>
-        <input
-          className={`w-16 text-right ${inputClassName}`}
-          type={type}
-          name={name}
-          id={id}
-          {...rest}
-        />
-        {unit}
-      </div>
-    </div>
-  );
-};
-
-const nutrimentsInput = [
-  { label: "Energy", id: "energy-kcal_100g", unit: "kcal" },
-  { label: "Proteins", id: "proteins_100g", unit: "g" },
-  { label: "Carbohydrates", id: "carbohydrates_100g", unit: "g" },
-  { label: "Total Fat", id: "fat_100g", unit: "g" },
-  { label: "Sugars", id: "sugars_100g", unit: "g" },
-  { label: "Saturated Fat", id: "saturated-fat_100g", unit: "g" },
-  { label: "Fiber", id: "fiber_100g", unit: "g" },
-  { label: "Sodium", id: "sodium_100g", unit: "g" },
-];
-
 const CreateCustomFood = () => {
   const [, setLocation] = useLocation();
-  const dateParams = useParams<DateParams>();
-  const date: Dayjs = dayjs(dateParams.date);
+  const date: Dayjs = dayjs(useParams<DateParams>().date);
 
   async function addFoodItemFromForm(data: FormData) {
     const parseNum = (key: string) => {

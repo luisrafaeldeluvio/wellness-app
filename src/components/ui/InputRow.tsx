@@ -1,4 +1,4 @@
-interface LabeledInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface LabeledInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   containerClassName?: string;
   label: string;
   unit?: string;

@@ -1,126 +1,95 @@
-import InputRow from "../ui/InputRow";
+import InputRow, { type LabeledInputProps } from "../ui/InputRow";
 
 interface FoodInfoProps {
-  disabledInputs?: (NutrimentId | GeneralId)[] | boolean;
-  defaultValue?: Partial<Record<NutrimentId | GeneralId, string>>;
+  disabledInputs?: (NutrimentIds | GeneralIds)[] | boolean;
+  defaultValue?: Partial<Record<NutrimentIds | GeneralIds, string>>;
 }
 
-type NutrimentId = (typeof nutrimentsInput)[number]["id"];
+type NutrimentIds = (typeof NUTRIMENT_FIELDS)[number]["id"];
 
-type GeneralId = (typeof generalInput)[number]["id"];
+type GeneralIds = (typeof GENERAL_FIELDS)[number]["id"];
 
-const nutrimentsInput = [
+const NUTRIMENT_FIELDS = [
   {
     label: "Energy",
     id: "energy-kcal_100g",
     unit: "kcal",
-    attr: {
-      required: true,
-    },
+    required: true,
   },
   {
     label: "Proteins",
     id: "proteins_100g",
     unit: "g",
-    attr: {
-      required: false,
-    },
+    required: false,
   },
   {
     label: "Carbohydrates",
     id: "carbohydrates_100g",
     unit: "g",
-    attr: {
-      required: false,
-    },
+    required: false,
   },
   {
     label: "Total Fat",
     id: "fat_100g",
     unit: "g",
-    attr: {
-      required: false,
-    },
+    required: false,
   },
   {
     label: "Sugars",
     id: "sugars_100g",
     unit: "g",
-    attr: {
-      required: false,
-    },
+    required: false,
   },
   {
     label: "Saturated Fat",
     id: "saturated-fat_100g",
     unit: "g",
-    attr: {
-      required: false,
-    },
+    required: false,
   },
   {
     label: "Fiber",
     id: "fiber_100g",
     unit: "g",
-    attr: {
-      required: false,
-    },
+    required: false,
   },
   {
     label: "Sodium",
     id: "sodium_100g",
     unit: "g",
-    attr: {
-      required: false,
-    },
+    required: false,
   },
-] as const;
+] as const satisfies LabeledInputProps[];
 
-const generalInput = [
+const GENERAL_FIELDS = [
   {
     label: "Date",
     id: "date",
     type: "date",
-    unit: "",
-    attr: {
-      inputClassName: "w-32",
-      containerClassName: "mt-0!",
-    },
+    inputClassName: "w-32",
+    containerClassName: "mt-0!",
   },
   {
     label: "Name",
     id: "name",
     type: "text",
-    unit: "",
-    attr: {
-      inputClassName: "w-32",
-      containerClassName: "",
-    },
+    inputClassName: "w-32",
   },
   {
     label: "Serving Size",
     id: "serving_size",
     type: "text",
-    unit: "",
-    attr: {
-      inputClassName: "w-32",
-      containerClassName: "",
-    },
+    inputClassName: "w-32",
   },
   {
     label: "Consumed",
     id: "consumed_g",
     type: "number",
     unit: "g",
-    attr: {
-      inputClassName: "",
-      containerClassName: "",
-    },
   },
-] as const;
+] as const satisfies LabeledInputProps[];
 
 const FoodInfo = ({ disabledInputs, defaultValue }: FoodInfoProps) => {
-  const isInputDisabled = (id: NutrimentId | GeneralId) => {
+  const isInputDisabled = (id: NutrimentIds | GeneralIds) => {
     if (!disabledInputs) return undefined;
 
     if (typeof disabledInputs === "boolean") {
@@ -133,30 +102,22 @@ const FoodInfo = ({ disabledInputs, defaultValue }: FoodInfoProps) => {
   return (
     <>
       <fieldset>
-        {generalInput.map(({ label, id, type, attr }) => (
+        {GENERAL_FIELDS.map((attr) => (
           <InputRow
-            label={label}
-            type={type}
-            name={id}
-            value={defaultValue?.[id]}
-            id={id}
-            required
-            readOnly={isInputDisabled(id)}
             {...attr}
+            value={defaultValue?.[attr.id]}
+            readOnly={isInputDisabled(attr.id)}
+            required
           />
         ))}
       </fieldset>
 
       <fieldset>
-        {nutrimentsInput.map(({ label, id, unit, attr }) => (
+        {NUTRIMENT_FIELDS.map((attr) => (
           <InputRow
-            label={label}
             type="number"
-            name={id}
-            value={defaultValue?.[id]}
-            id={id}
-            unit={unit}
-            readOnly={isInputDisabled(id)}
+            value={defaultValue?.[attr.id]}
+            readOnly={isInputDisabled(attr.id)}
             {...attr}
           />
         ))}
