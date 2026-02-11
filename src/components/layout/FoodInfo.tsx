@@ -105,7 +105,7 @@ const FoodInfo = ({ disabledInputs, defaultValue }: FoodInfoProps) => {
         {GENERAL_FIELDS.map((attr) => (
           <InputRow
             {...attr}
-            value={defaultValue?.[attr.id]}
+            defaultValue={defaultValue?.[attr.id]}
             readOnly={isInputDisabled(attr.id)}
             required
           />
@@ -116,7 +116,7 @@ const FoodInfo = ({ disabledInputs, defaultValue }: FoodInfoProps) => {
         {NUTRIMENT_FIELDS.map((attr) => (
           <InputRow
             type="number"
-            value={defaultValue?.[attr.id]}
+            defaultValue={defaultValue?.[attr.id]}
             readOnly={isInputDisabled(attr.id)}
             {...attr}
           />
