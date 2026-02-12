@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { db, type FoodItem, type IJournal } from "../db";
+import { db, type JournalFoodItem, type IJournal } from "../db";
 import { normalizeNutriment } from "./foodItemService";
 
 /**
@@ -25,7 +25,10 @@ export const updateJournal = async (journal: IJournal) => {
   });
 };
 
-export const addFoodToJournal = (journal: IJournal, foodItem: FoodItem) => {
+export const addFoodToJournal = (
+  journal: IJournal,
+  foodItem: JournalFoodItem,
+) => {
   if (!foodItem.id) return;
 
   journal.foodItemIDs.push(foodItem.id);

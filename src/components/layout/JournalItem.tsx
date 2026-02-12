@@ -1,4 +1,4 @@
-import type { FoodItem } from "../../db/models/foodItem";
+import type { JournalFoodItem } from "../../db/models/foodItem";
 import Button from "../ui/Button";
 import trashIcon from "../../assets/icons/delete_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 import editIcon from "../../assets/icons/edit_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
@@ -11,7 +11,7 @@ import { useEffect, useRef } from "react";
 import tempIcon from "../../assets/icons/temp_icon.svg";
 
 interface FoodItemProps {
-  data: FoodItem;
+  data: JournalFoodItem;
 }
 
 const JournalItem = ({ data }: FoodItemProps) => {

@@ -2,10 +2,10 @@ import { useLocation } from "wouter";
 import FoodInfo from "../../components/layout/FoodInfo";
 import Button from "../../components/ui/Button";
 import Header from "../../components/ui/Header";
-import type { FoodItem } from "../../db";
+import type { JournalFoodItem } from "../../db";
 
 const FoodItemInfo = () => {
-  const data: FoodItem = window.history.state;
+  const data: JournalFoodItem = window.history.state;
   const [, setLocation] = useLocation();
 
   return (

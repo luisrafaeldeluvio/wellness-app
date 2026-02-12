@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
 import CalendarHead from "../../components/layout/Calendar";
 import LogFoodButton from "../../components/layout/LogFoodButton";
-import { type FoodItem as IFoodItem } from "../../db/models/foodItem";
+import { type JournalFoodItem } from "../../db/models/foodItem";
 import JournalItem from "../../components/layout/JournalItem";
 import { type IJournal } from "../../db";
 import { getJournalByDate } from "../../services/journalService";
@@ -38,7 +38,7 @@ const Journal = () => {
       return {
         journal: journalData,
         foodItems: foods.filter(
-          (food): food is IFoodItem => food !== undefined,
+          (food): food is JournalFoodItem => food !== undefined,
         ),
       };
 

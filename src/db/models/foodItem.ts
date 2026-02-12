@@ -1,18 +1,7 @@
-export interface GenericJournalItem {
-  id?: number;
-  date: string;
-  name: string;
-}
-
-export interface GenericActivityItem extends GenericJournalItem {
-  energy: number;
-  duration: number;
-}
-
-export interface FoodItem extends GenericJournalItem {
+export interface FoodItem {
   code: string;
+  name: string;
   serving_size: string;
-  consumed_g: number;
   nutriments: {
     "energy-kcal_100g": number;
     proteins_100g?: number;
@@ -24,3 +13,9 @@ export interface FoodItem extends GenericJournalItem {
     sodium_100g?: number;
   };
 }
+
+export type JournalFoodItem = FoodItem & {
+  id?: number;
+  date: string;
+  consumed_g: number;
+};
