@@ -11,8 +11,9 @@ import { useEffect } from "react";
 import CreateProfile from "./pages/CreateProfile";
 import LogWeight from "./pages/LogWeight";
 import EditLogFood from "./pages/journal/EditLogFood";
-import dayjs from "dayjs";
 import CreateCustomFood from "./pages/journal/CreateCustomFood";
+
+const noNavBar = ["/new", "/journal/logfood", "/profile"];
 
 const App = () => {
   const [location, setLocation] = useLocation();
@@ -20,46 +21,36 @@ const App = () => {
   useEffect(() => {
     (async () => {
       const user = await getUser();
-      if (!user) {
-        setLocation("/new");
-      }
+      if (!user) setLocation("/new");
     })();
   }, []);
-
-  const noNavBar = ["/new", "/journal/logfood", "/Profile"];
-
-  const showNavBar = () => {
-    const inList = noNavBar.find((v) => v === location);
-    return inList ? false : true;
-  };
 
   return (
     <div className="flex flex-col overflow-hidden">
       <main className="relative flex h-[calc(100dvh-(var(--spacing)*16))] grow flex-col overflow-y-auto">
         <Switch>
-          <Route path="/" component={Home}></Route>
-          <Route
-            path="/journal/logfood/create"
-            component={CreateCustomFood}
-          ></Route>
-          <Route path="/journal/logfood/:date" component={LogFood}></Route>
+          <Route path="/">
+            <Redirect to="/home" />
+          </Route>
+
+          <Route path="/journal/logfood/create" component={CreateCustomFood} />
+          <Route path="/journal/logfood/:date" component={LogFood} />
           <Route path="/journal/editlogfood/:id">
             {(params) => <EditLogFood foodId={params.id}></EditLogFood>}
           </Route>
-          <Route path="/journal/:date" component={Journal}></Route>
+          <Route path="/journal/:date" component={Journal} />
 
-          <Route path="/menu" component={Menu}></Route>
-          <Route path="/report" component={Report}></Route>
-          <Route path="/profile" component={Profile}></Route>
-          <Route path="/home">
-            <Redirect to="/" />
-          </Route>
-          <Route path="/new" component={CreateProfile}></Route>
-          <Route path="/logweight" component={LogWeight}></Route>
+          <Route path="/menu" component={Menu} />
+          <Route path="/report" component={Report} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/home" component={Home} />
+
+          <Route path="/new" component={CreateProfile} />
+          <Route path="/logweight" component={LogWeight} />
         </Switch>
       </main>
 
-      {showNavBar() ? <NavBar></NavBar> : null}
+      {noNavBar.includes(location) ? null : <NavBar />}
     </div>
   );
 };
