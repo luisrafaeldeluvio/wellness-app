@@ -12,6 +12,7 @@ import CreateProfile from "./pages/CreateProfile";
 import LogWeight from "./pages/LogWeight";
 import EditLogFood from "./pages/journal/EditLogFood";
 import CreateCustomFood from "./pages/journal/CreateCustomFood";
+import FoodItemInfo from "./pages/journal/FoodItemInfo";
 
 const noNavBar = ["/new", "/journal/logfood", "/profile"];
 
@@ -47,6 +48,7 @@ const App = () => {
 
           <Route path="/new" component={CreateProfile} />
           <Route path="/logweight" component={LogWeight} />
+          <Route path="/food/:date/:id" component={FoodItemInfo} />
         </Switch>
       </main>
 
@@ -56,3 +58,5 @@ const App = () => {
 };
 
 export default App;
+
+// look into routers route nesting

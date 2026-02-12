@@ -6,7 +6,7 @@ import {
   deleteFoodItem,
   normalizeNutriment,
 } from "../../services/foodItemService";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { useEffect, useRef } from "react";
 import tempIcon from "../../assets/icons/temp_icon.svg";
 
@@ -16,6 +16,7 @@ interface FoodItemProps {
 
 const JournalItem = ({ data }: FoodItemProps) => {
   const midRef = useRef<HTMLDivElement>(null);
+  const [, setLocation] = useLocation();
 
   useEffect(() => {
     midRef.current?.scrollIntoView();
@@ -37,6 +38,11 @@ const JournalItem = ({ data }: FoodItemProps) => {
       <div
         ref={midRef}
         className="flex shrink-0 basis-full snap-center items-center justify-center"
+        onClick={() => {
+          setLocation(`/food/${data.date}/${data.id}`, {
+            state: data,
+          });
+        }}
       >
         <img className="m-2 size-12" src={tempIcon} />
         <span>{data.name}</span>
