@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useLocation } from "wouter";
-import Header from "../components/ui/Header";
+import { Header, PageHeader } from "../components/ui/Header";
 import { addWeight, getWeight } from "../services/weightService";
 import { useEffect, useState } from "react";
 import Button from "../components/ui/Button";
@@ -32,12 +32,7 @@ const LogWeight = () => {
 
   return (
     <>
-      <div className="flex flex-row items-center">
-        <Button onClick={() => setLocation("/journal")} style="mr-0">
-          Back
-        </Button>
-        <Header>Log Weight</Header>
-      </div>
+      <PageHeader headerText="Log Weight" />
 
       <form action={logWeightFromForm} name="logWeight" className="m-4">
         <fieldset>

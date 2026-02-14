@@ -2,7 +2,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { addFoodItem } from "../../services/foodItemService";
 import { addJournal, getJournalByDate } from "../../services/journalService";
 import { useLocation, useParams } from "wouter";
-import Header from "../../components/ui/Header";
+import { PageHeader } from "../../components/ui/Header";
 import Button from "../../components/ui/Button";
 import checkIcon from "../../assets/icons/check_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 import FoodInfo from "../../components/layout/FoodInfo";
@@ -84,15 +84,7 @@ const CreateCustomFood = () => {
 
   return (
     <>
-      <div className="flex flex-row items-center">
-        <Button
-          onClick={() => setLocation(`~/journal/${date.format("YYYY-MM-DD")}`)}
-          style="mr-0"
-        >
-          Back
-        </Button>
-        <Header>Log Food</Header>
-      </div>
+      <PageHeader headerText="Create Food" />
       <form
         action={addFoodItemFromForm}
         name="logFood"

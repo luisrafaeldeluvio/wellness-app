@@ -1,24 +1,14 @@
-import { useLocation } from "wouter";
 import FoodInfo from "../../components/layout/FoodInfo";
-import Button from "../../components/ui/Button";
-import Header from "../../components/ui/Header";
+
+import { PageHeader } from "../../components/ui/Header";
 import type { JournalFoodItem } from "../../db";
 
 const FoodItemInfo = () => {
   const data: JournalFoodItem = window.history.state;
-  const [, setLocation] = useLocation();
 
   return (
     <>
-      <div className="flex flex-row items-center">
-        <Button
-          onClick={() => setLocation(`~/journal/${data.date}`)}
-          style="mr-0"
-        >
-          Back
-        </Button>
-        <Header>Log Food</Header>
-      </div>
+      <PageHeader headerText={data.name} location={`~/journal/${data.date}`} />
 
       <div className="m-4">
         <FoodInfo

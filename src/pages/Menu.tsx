@@ -1,6 +1,6 @@
 import { useLocation } from "wouter";
 import Button from "../components/ui/Button";
-import Header from "../components/ui/Header";
+import { Header } from "../components/ui/Header";
 
 const Menu = () => {
   const [, setLocation] = useLocation();

@@ -5,9 +5,9 @@ import { type JournalFoodItem } from "../../db/models/foodItem";
 import JournalItem from "../../components/layout/JournalItem";
 import { type IJournal } from "../../db";
 import { getJournalByDate } from "../../services/journalService";
-import { bulkGetFoodItem, getFoodItem } from "../../services/foodItemService";
+import { bulkGetFoodItem } from "../../services/foodItemService";
 import JournalSummary from "../../components/layout/JournalSummary";
-import Header from "../../components/ui/Header";
+import { Header } from "../../components/ui/Header";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useParams } from "wouter";
 

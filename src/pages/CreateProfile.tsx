@@ -1,5 +1,5 @@
 import { useLocation } from "wouter";
-import Header from "../components/ui/Header";
+import { Header } from "../components/ui/Header";
 import { type IUserInfo } from "../db";
 import { useEffect, useState } from "react";
 import { getEnergyOffset, initUser } from "../services/userService";
