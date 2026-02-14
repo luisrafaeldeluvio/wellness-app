@@ -79,14 +79,14 @@ const CreateCustomFood = () => {
       },
     });
 
-    setLocation(`/journal/${dayjs(formData.date).format("YYYY-MM-DD")}`);
+    setLocation(`~/journal/${dayjs(formData.date).format("YYYY-MM-DD")}`);
   }
 
   return (
     <>
       <div className="flex flex-row items-center">
         <Button
-          onClick={() => setLocation(`/journal/${date.format("YYYY-MM-DD")}`)}
+          onClick={() => setLocation(`~/journal/${date.format("YYYY-MM-DD")}`)}
           style="mr-0"
         >
           Back

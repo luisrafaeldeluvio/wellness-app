@@ -8,7 +8,7 @@ const Menu = () => {
     <>
       <Header>Menu</Header>
       <div>
-        <Button onClick={() => setLocation("/Profile")}>Profile</Button>
+        <Button onClick={() => setLocation("/profile")}>Profile</Button>
       </div>
     </>
   );

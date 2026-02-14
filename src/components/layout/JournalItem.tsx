@@ -28,7 +28,7 @@ const JournalItem = ({ data }: FoodItemProps) => {
       className="scrollbar-none flex w-full min-w-0 snap-x snap-mandatory flex-row overflow-x-auto text-sm [scrollbar-width:none]"
     >
       <div className="flex shrink-0 basis-1/4 snap-end items-center justify-center bg-green-500">
-        <Link href={`/journal/EditLogFood/${data.id}`}>
+        <Link href={`/editlogfood/${data.id}`}>
           <Button>
             <img src={editIcon} alt="Edit Entry" />
           </Button>
@@ -39,7 +39,7 @@ const JournalItem = ({ data }: FoodItemProps) => {
         ref={midRef}
         className="flex shrink-0 basis-full snap-center items-center justify-center"
         onClick={() => {
-          setLocation(`/food/${data.date}/${data.id}`, {
+          setLocation(`~/food/${data.date}/${data.id}`, {
             state: data,
           });
         }}

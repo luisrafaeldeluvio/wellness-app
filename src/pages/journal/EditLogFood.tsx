@@ -1,13 +1,14 @@
 import { editFoodItem, getFoodItem } from "../../services/foodItemService";
 
-import { useLocation } from "wouter";
+import { useLocation, useParams } from "wouter";
 import Header from "../../components/ui/Header";
 import Button from "../../components/ui/Button";
 import checkIcon from "../../assets/icons/check_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 import { useEffect, useState } from "react";
 // import { type IFoodItem } from "../db";
 
-const EditLogFood = ({ foodId }: { foodId: string }) => {
+const EditLogFood = () => {
+  const foodId = useParams<{ foodId: string }>();
   // const [food, setFood] = useState<IFoodItem>();
   const [, setLocation] = useLocation();
 
@@ -41,7 +42,7 @@ const EditLogFood = ({ foodId }: { foodId: string }) => {
   return (
     <>
       <div className="flex flex-row items-center">
-        <Button onClick={() => setLocation("/journal")} style="mr-0">
+        <Button onClick={() => setLocation("~/journal")} style="mr-0">
           Cancel
         </Button>
         {/* <Header>Edit {food?.name}</Header> */}

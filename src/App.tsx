@@ -1,5 +1,5 @@
 import { NavBar } from "./components/layout/NavBar";
-import { Route, Switch, Redirect, useLocation, useParams } from "wouter";
+import { Route, Switch, Redirect, useLocation } from "wouter";
 import Home from "./pages/Home";
 import Journal from "./pages/journal/Journal";
 import Menu from "./pages/Menu";
@@ -13,6 +13,7 @@ import LogWeight from "./pages/LogWeight";
 import EditLogFood from "./pages/journal/EditLogFood";
 import CreateCustomFood from "./pages/journal/CreateCustomFood";
 import FoodItemInfo from "./pages/journal/FoodItemInfo";
+import dayjs from "dayjs";
 
 const noNavBar = ["/new", "/journal/logfood", "/profile"];
 
@@ -34,12 +35,20 @@ const App = () => {
             <Redirect to="/home" />
           </Route>
 
-          <Route path="/journal/logfood/create" component={CreateCustomFood} />
-          <Route path="/journal/logfood/:date" component={LogFood} />
-          <Route path="/journal/editlogfood/:id">
-            {(params) => <EditLogFood foodId={params.id}></EditLogFood>}
+          <Route path="/journal" nest>
+            <Route path="/logfood" nest>
+              <Route path="/create" component={CreateCustomFood} />
+              <Route path="/:date" component={LogFood} />
+            </Route>
+
+            <Route path="/editlogfood/:id" component={EditLogFood} />
+
+            <Route path="/:date" component={Journal} />
+
+            <Route path="/">
+              <Redirect to={`/${dayjs().format("YYYY-MM-DD")}`} />
+            </Route>
           </Route>
-          <Route path="/journal/:date" component={Journal} />
 
           <Route path="/menu" component={Menu} />
           <Route path="/report" component={Report} />
@@ -58,5 +67,3 @@ const App = () => {
 };
 
 export default App;
-
-// look into routers route nesting

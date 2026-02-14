@@ -12,7 +12,7 @@ const FoodItemInfo = () => {
     <>
       <div className="flex flex-row items-center">
         <Button
-          onClick={() => setLocation(`/journal/${data.date}`)}
+          onClick={() => setLocation(`~/journal/${data.date}`)}
           style="mr-0"
         >
           Back
