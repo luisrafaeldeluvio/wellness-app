@@ -25,6 +25,24 @@ const OPENFOODFACTS_IDENTITY = {
   contact: "wellnessapp-off@lrrd.anonaddy.com",
 };
 
+interface BarCodeResponse {
+  code: string;
+  status: number;
+  status_verbose: string;
+  product: {
+    product_name: string;
+    serving_size: string;
+    "energy-kcal_100g": number;
+    proteins_100g?: number;
+    carbohydrates_100g?: number;
+    sugars_100g?: number;
+    fat_100g?: number;
+    "saturated-fat_100g"?: number;
+    fiber_100g?: number;
+    sodium_100g?: number;
+  };
+}
+
 interface SearchResponse {
   count: number;
   page: string;
@@ -46,6 +64,10 @@ interface SearchResponse {
   skip: number;
 }
 
+interface FoodBarCodeParams {
+  barcode: string;
+}
+
 interface FoodSearchParams {
   searchTerm: string;
   options?: {
@@ -58,6 +80,35 @@ const apiParams = new URLSearchParams({
   fields: OPENFOODFACTS_FIELDS.join(","),
   ...OPENFOODFACTS_IDENTITY,
 });
+
+export async function getFoodBarCodeResult(barcode: string) {
+  try {
+    const response = await fetch(
+      `${OPENFOODFACTS_API_URL}/api/v2/product/${barcode}?${URLSearchParams.toString()}`,
+    );
+
+    const item: BarCodeResponse = await response.json();
+
+    const food: FoodItem = {
+      name: item.product.product_name,
+      code: item.code,
+      serving_size: item.product.serving_size,
+      nutriments: {
+        "energy-kcal_100g": item.product["energy-kcal_100g"],
+        proteins_100g: item.product.proteins_100g,
+        carbohydrates_100g: item.product.carbohydrates_100g,
+        sugars_100g: item.product.sugars_100g,
+        fat_100g: item.product.fat_100g,
+        "saturated-fat_100g": item.product["saturated-fat_100g"],
+        fiber_100g: item.product.fiber_100g,
+        sodium_100g: item.product.sodium_100g,
+      },
+    };
+    return food;
+  } catch (e) {
+    console.error(e);
+  }
+}
 
 export async function getFoodSearchResults({
   searchTerm,
@@ -99,54 +150,3 @@ export async function getFoodSearchResults({
     return [];
   }
 }
-
-// interface OpenFoodFactsResponse {
-//   code: string;
-//   status: number;
-//   status_verbose: string;
-//   product: {
-//     product_name: string;
-//     serving_size: string;
-//     "energy-kcal_100g": number;
-//     proteins_100g?: number;
-//     carbohydrates_100g?: number;
-//     sugars_100g?: number;
-//     fat_100g?: number;
-//     "saturated-fat_100g"?: number;
-//     fiber_100g?: number;
-//     sodium_100g?: number;
-//   };
-// }
-
-// export async function off() {
-//   try {
-//     const food = await fetch(
-//       `${OPENFOODFACTS_API_URL}/api/v2/product/4800016644801?${params.toString()}`,
-//       {
-//         headers: {
-//           "User-Agent": `${OPENFOODFACTS_IDENTITY.app_name}/${OPENFOODFACTS_IDENTITY.app_version} (${OPENFOODFACTS_IDENTITY.contact})`,
-//         },
-//       },
-//     );
-
-//     const item: OpenFoodFactsResponse = await food.json();
-//     const x: FoodItem = {
-//       name: item.product.product_name,
-//       code: item.code,
-//       serving_size: item.product.serving_size,
-//       nutriments: {
-//         "energy-kcal_100g": item.product["energy-kcal_100g"],
-//         proteins_100g: item.product.proteins_100g,
-//         carbohydrates_100g: item.product.carbohydrates_100g,
-//         sugars_100g: item.product.sugars_100g,
-//         fat_100g: item.product.fat_100g,
-//         "saturated-fat_100g": item.product["saturated-fat_100g"],
-//         fiber_100g: item.product.fiber_100g,
-//         sodium_100g: item.product.sodium_100g,
-//       },
-//     };
-//     console.log(x);
-//   } catch (e) {
-//     console.error(e);
-//   }
-// }
