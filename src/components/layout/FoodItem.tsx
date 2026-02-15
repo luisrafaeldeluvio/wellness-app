@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import tempIcon from "../../assets/icons/temp_icon.svg";
 
 interface FoodItemProps {
-  id: number;
+  id: number | string;
   name: string;
   energy: number;
   options?: {
@@ -51,9 +51,8 @@ const FoodItem = ({
         ref={midRef}
         className="flex shrink-0 basis-full snap-center items-center justify-center"
         onClick={() => {
-          setLocation(`~/food/${data.date}/${id}`, {
-            state: data,
-          });
+          const foodType: string = typeof id === "string" ? "code" : "id";
+          setLocation(`~/food/${foodType}/${id}`);
         }}
       >
         <img className="m-2 size-12" src={tempIcon} />
