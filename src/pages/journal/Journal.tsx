@@ -2,7 +2,7 @@ import dayjs, { Dayjs } from "dayjs";
 import CalendarHead from "../../components/layout/Calendar";
 import LogFoodButton from "../../components/layout/LogFoodButton";
 import { type JournalFoodItem } from "../../db/models/foodItem";
-import JournalItem from "../../components/layout/JournalItem";
+import FoodItem from "../../components/layout/FoodItem";
 import { type IJournal } from "../../db";
 import { getJournalByDate } from "../../services/journalService";
 import { bulkGetFoodItem } from "../../services/foodItemService";
@@ -58,7 +58,11 @@ const Journal = () => {
 
         <ul className="list-none overflow-scroll">
           {foodItems?.map((food) => (
-            <JournalItem data={food}></JournalItem>
+            <FoodItem
+              id={food.id!}
+              name={food.name}
+              energy={food.nutriments["energy-kcal_100g"]}
+            ></FoodItem>
           ))}
         </ul>
       </div>
