@@ -4,6 +4,10 @@ import Button from "../../components/ui/Button";
 import searchIcon from "../../assets/icons/search_24dp_000000_FILL1_wght200_GRAD0_opsz24.svg";
 import barcodeIcon from "../../assets/icons/barcode_scanner_24dp_000000_FILL1_wght200_GRAD0_opsz24.svg";
 import addIcon from "../../assets/icons/add_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
+import { useState } from "react";
+import { getFoodSearchResults } from "../../services/openFoodFacts";
+import { type FoodItem as IFoodItem } from "../../db";
+import FoodItem from "../../components/layout/FoodItem";
 
 interface DateParams {
   date: string;
@@ -14,6 +18,8 @@ const DefaultNoSearch = () => {};
 const NoSearchResult = () => {};
 
 const LogFood = () => {
+  const [searchResult, setSearchResult] = useState<IFoodItem[]>();
+
   return (
     <>
       <PageHeader headerText="Log Food" />
@@ -23,7 +29,17 @@ const LogFood = () => {
           <img src={searchIcon} alt="Search for Food" />
         </Button>
 
-        <form action={() => {}}>
+        <form
+          action={(e) => {
+            (async () => {
+              setSearchResult(
+                await getFoodSearchResults({
+                  searchTerm: String(e.get("searchOpenFoodFacts")),
+                }),
+              );
+            })();
+          }}
+        >
           <input
             type="search"
             name="searchOpenFoodFacts"
@@ -36,6 +52,17 @@ const LogFood = () => {
           <img src={barcodeIcon} alt="Scan a barcode" />
         </Button>
       </div>
+
+      {searchResult?.map((e) => {
+        return (
+          <FoodItem
+            id={e.code}
+            name={e.name}
+            energy={e.nutriments["energy-kcal_100g"]}
+            options={{ disableDelete: true, disableEdit: true }}
+          />
+        );
+      })}
 
       <Link href={`/create`}>
         <button className="absolute right-0 bottom-0 m-4 rounded-xl border bg-white p-2">

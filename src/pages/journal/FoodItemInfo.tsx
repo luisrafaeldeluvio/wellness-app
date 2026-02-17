@@ -8,7 +8,10 @@ import { useParams } from "wouter";
 
 const ItemInfo = ({ food }: { food: JournalFoodItem | FoodItem }) => {
   const processedFood = Object.fromEntries(
-    Object.entries(food).map(([k, v]) => [k, String(v)]),
+    Object.entries({ ...food, ...food.nutriments }).map(([k, v]) => [
+      k,
+      String(v),
+    ]),
   );
   return (
     <>
