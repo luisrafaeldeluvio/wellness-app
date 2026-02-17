@@ -57,7 +57,10 @@ const App = () => {
 
           <Route path="/new" component={CreateProfile} />
           <Route path="/logweight" component={LogWeight} />
-          <Route path="/food/:type/:id" component={FoodItemInfo} />
+          <Route path="/food/" nest>
+            <Route path="/journal/:id/" />
+            <Route path="/food/:code/" />
+          </Route>
         </Switch>
       </main>
 
