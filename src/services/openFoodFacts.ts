@@ -84,7 +84,7 @@ const apiParams = new URLSearchParams({
 export async function getFoodBarCodeResult(barcode: string) {
   try {
     const response = await fetch(
-      `${OPENFOODFACTS_API_URL}/api/v2/product/${barcode}?${URLSearchParams.toString()}`,
+      `${OPENFOODFACTS_API_URL}/api/v2/product/${barcode}?${apiParams.toString()}`,
     );
 
     const item: BarCodeResponse = await response.json();
