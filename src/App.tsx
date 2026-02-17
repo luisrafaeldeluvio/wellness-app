@@ -12,8 +12,8 @@ import CreateProfile from "./pages/CreateProfile";
 import LogWeight from "./pages/LogWeight";
 import EditLogFood from "./pages/journal/EditLogFood";
 import CreateCustomFood from "./pages/journal/CreateCustomFood";
-import FoodItemInfo from "./pages/journal/FoodItemInfo";
 import dayjs from "dayjs";
+import { FoodItemInfo, JournalItemInfo } from "./pages/journal/FoodItemInfo";
 
 const noNavBar = ["/new", "/journal/logfood", "/profile"];
 
@@ -58,8 +58,8 @@ const App = () => {
           <Route path="/new" component={CreateProfile} />
           <Route path="/logweight" component={LogWeight} />
           <Route path="/food/" nest>
-            <Route path="/journal/:id/" />
-            <Route path="/food/:code/" />
+            <Route path="/journal/:id/" component={JournalItemInfo} />
+            <Route path="/food/:code/" component={FoodItemInfo} />
           </Route>
         </Switch>
       </main>

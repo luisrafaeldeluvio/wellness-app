@@ -51,7 +51,7 @@ const FoodItem = ({
         ref={midRef}
         className="flex shrink-0 basis-full snap-center items-center justify-center"
         onClick={() => {
-          const foodType: string = typeof id === "string" ? "code" : "id";
+          const foodType: string = typeof id === "string" ? "food" : "journal";
           setLocation(`~/food/${foodType}/${id}`);
         }}
       >
