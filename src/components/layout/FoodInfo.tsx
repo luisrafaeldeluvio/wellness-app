@@ -2,6 +2,7 @@ import InputRow, { type LabeledInputProps } from "../ui/InputRow";
 
 interface FoodInfoProps {
   disabledInputs?: (NutrimentIds | GeneralIds)[] | boolean;
+  hiddenInputs?: (NutrimentIds | GeneralIds)[] | boolean;
   defaultValue?: Partial<Record<NutrimentIds | GeneralIds, string>>;
 }
 
@@ -88,7 +89,11 @@ const GENERAL_FIELDS = [
   },
 ] as const satisfies LabeledInputProps[];
 
-const FoodInfo = ({ disabledInputs, defaultValue }: FoodInfoProps) => {
+const FoodInfo = ({
+  disabledInputs,
+  hiddenInputs,
+  defaultValue,
+}: FoodInfoProps) => {
   const isInputDisabled = (id: NutrimentIds | GeneralIds) => {
     if (!disabledInputs) return undefined;
 
@@ -99,12 +104,23 @@ const FoodInfo = ({ disabledInputs, defaultValue }: FoodInfoProps) => {
     }
   };
 
+  const isInputHidden = (id: NutrimentIds | GeneralIds) => {
+    if (!hiddenInputs) return undefined;
+
+    if (typeof hiddenInputs === "boolean") {
+      return hiddenInputs;
+    } else {
+      return hiddenInputs.includes(id);
+    }
+  };
+
   return (
     <>
       <fieldset>
         {GENERAL_FIELDS.map((attr) => (
           <InputRow
             {...attr}
+            type={isInputHidden(attr.id) ? "hidden" : ""}
             defaultValue={defaultValue?.[attr.id]}
             readOnly={isInputDisabled(attr.id)}
             required
@@ -115,7 +131,7 @@ const FoodInfo = ({ disabledInputs, defaultValue }: FoodInfoProps) => {
       <fieldset>
         {NUTRIMENT_FIELDS.map((attr) => (
           <InputRow
-            type="number"
+            type={isInputHidden(attr.id) ? "hidden" : "number"}
             defaultValue={defaultValue?.[attr.id]}
             readOnly={isInputDisabled(attr.id)}
             {...attr}

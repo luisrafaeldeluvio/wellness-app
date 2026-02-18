@@ -21,6 +21,7 @@ const ItemInfo = ({ food }: { food: JournalFoodItem | FoodItem }) => {
             ...processedFood,
           }}
           disabledInputs={true}
+          hiddenInputs={["date", "consumed_g"]}
         ></FoodInfo>
       </div>
     </>
