@@ -1,13 +1,13 @@
 import Dexie, { type Table } from "dexie";
 import { type IWeightLog } from "./models/weight";
 import { type IUserInfo } from "./models/user";
-import { type IFoodItem } from "./models/foodItem";
+import { type JournalFoodItem } from "./models/foodItem";
 import { type IJournal } from "./models/journal";
 
 export class AppDB extends Dexie {
   userinfo!: Table<IUserInfo, number>;
   weightlog!: Table<IWeightLog, number>;
-  fooditem!: Table<IFoodItem, number>;
+  fooditem!: Table<JournalFoodItem, number>;
   journal!: Table<IJournal, number>;
 
   constructor() {

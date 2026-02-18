@@ -1,13 +1,13 @@
 import dayjs, { Dayjs } from "dayjs";
-import CalendarHead from "../components/layout/Calendar";
-import LogFoodButton from "../components/layout/LogFoodButton";
-import type { IFoodItem } from "../db/models/foodItem";
-import FoodItem from "../components/layout/FoodItem";
-import { type IJournal } from "../db";
-import { getJournalByDate } from "../services/journalService";
-import { bulkGetFoodItem, getFoodItem } from "../services/foodItemService";
-import JournalSummary from "../components/layout/JournalSummary";
-import Header from "../components/ui/Header";
+import CalendarHead from "../../components/layout/Calendar";
+import LogFoodButton from "../../components/layout/LogFoodButton";
+import { type JournalFoodItem } from "../../db/models/foodItem";
+import FoodItem from "../../components/layout/FoodItem";
+import { type IJournal } from "../../db";
+import { getJournalByDate } from "../../services/journalService";
+import { bulkGetFoodItem } from "../../services/foodItemService";
+import JournalSummary from "../../components/layout/JournalSummary";
+import { Header } from "../../components/ui/Header";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useParams } from "wouter";
 
@@ -38,7 +38,7 @@ const Journal = () => {
       return {
         journal: journalData,
         foodItems: foods.filter(
-          (food): food is IFoodItem => food !== undefined,
+          (food): food is JournalFoodItem => food !== undefined,
         ),
       };
 
@@ -58,7 +58,11 @@ const Journal = () => {
 
         <ul className="list-none overflow-scroll">
           {foodItems?.map((food) => (
-            <FoodItem data={food}></FoodItem>
+            <FoodItem
+              id={food.id!}
+              name={food.name}
+              energy={food.nutriments["energy-kcal_100g"]}
+            ></FoodItem>
           ))}
         </ul>
       </div>

@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
-import { db, type IFoodItem, type IJournal } from "../db";
+import { db, type JournalFoodItem, type IJournal } from "../db";
+import { normalizeNutriment } from "./foodItemService";
 
 /**
  * Adds a journal entry to the DB.
@@ -24,12 +25,20 @@ export const updateJournal = async (journal: IJournal) => {
   });
 };
 
-export const addFoodToJournal = (journal: IJournal, foodItem: IFoodItem) => {
+export const addFoodToJournal = (
+  journal: IJournal,
+  foodItem: JournalFoodItem,
+) => {
   if (!foodItem.id) return;
 
   journal.foodItemIDs.push(foodItem.id);
 
-  const energy = foodItem.energy;
+  const energy = normalizeNutriment({
+    nutriment: foodItem.nutriments["energy-kcal_100g"],
+    consumed_g: foodItem.consumed_g,
+    decimal: 0,
+  });
+
   if (energy < 0) {
     journal.totalEnergy.outflow += energy;
   } else {

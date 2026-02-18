@@ -1,53 +1,54 @@
-import { editFoodItem, getFoodItem } from "../services/foodItemService";
+import { editFoodItem, getFoodItem } from "../../services/foodItemService";
 
-import { useLocation } from "wouter";
-import Header from "../components/ui/Header";
-import Button from "../components/ui/Button";
-import checkIcon from "../assets/icons/check_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
+import { useLocation, useParams } from "wouter";
+import { Header } from "../../components/ui/Header";
+import Button from "../../components/ui/Button";
+import checkIcon from "../../assets/icons/check_circle_24dp_000000_FILL0_wght200_GRAD0_opsz24.svg";
 import { useEffect, useState } from "react";
-import { type IFoodItem } from "../db";
+// import { type IFoodItem } from "../db";
 
-const EditLogFood = ({ foodId }: { foodId: string }) => {
-  const [food, setFood] = useState<IFoodItem>();
+const EditLogFood = () => {
+  const foodId = useParams<{ foodId: string }>();
+  // const [food, setFood] = useState<IFoodItem>();
   const [, setLocation] = useLocation();
 
-  async function addFoodItemFromForm(data: FormData) {
-    const journalDate = data.get("journalDate") as string | null;
-    const foodName = data.get("foodName") as string | null;
-    const energy = data.get("energy") ? Number(data.get("energy")) : null;
+  // async function addFoodItemFromForm(data: FormData) {
+  //   const journalDate = data.get("journalDate") as string | null;
+  //   const foodName = data.get("foodName") as string | null;
+  //   const energy = data.get("energy") ? Number(data.get("energy")) : null;
 
-    if (!journalDate || !foodName || !energy) {
-      console.error("No data in form");
-      return;
-    }
+  //   if (!journalDate || !foodName || !energy) {
+  //     console.error("No data in form");
+  //     return;
+  //   }
 
-    if (food?.id)
-      await editFoodItem(food.id, {
-        name: foodName,
-        energy: energy,
-        date: journalDate,
-      });
+  //   if (food?.id)
+  //     await editFoodItem(food.id, {
+  //       name: foodName,
+  //       energy: energy,
+  //       date: journalDate,
+  //     });
 
-    setLocation("/journal");
-  }
+  //   setLocation("/journal");
+  // }
 
-  useEffect(() => {
-    (async () => {
-      const data = await getFoodItem(Number(foodId));
-      if (data) setFood(data);
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const data = await getFoodItem(Number(foodId));
+  //     if (data) setFood(data);
+  //   })();
+  // }, []);
 
   return (
     <>
       <div className="flex flex-row items-center">
-        <Button onClick={() => setLocation("/journal")} style="mr-0">
+        <Button onClick={() => setLocation("~/journal")} style="mr-0">
           Cancel
         </Button>
-        <Header>Edit {food?.name}</Header>
+        {/* <Header>Edit {food?.name}</Header> */}
       </div>
-
-      <form
+      <p>Under Construction</p>
+      {/* <form
         action={addFoodItemFromForm}
         name="logFood"
         autoComplete="on"
@@ -98,7 +99,7 @@ const EditLogFood = ({ foodId }: { foodId: string }) => {
             src={checkIcon}
           />
         </Button>
-      </form>
+      </form> */}
     </>
   );
 };

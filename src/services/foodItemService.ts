@@ -1,4 +1,4 @@
-import { db, type IFoodItem, type IJournal } from "../db";
+import { db, type JournalFoodItem, type IJournal } from "../db";
 import { addFoodToJournal } from "./journalService";
 
 /**
@@ -9,7 +9,7 @@ import { addFoodToJournal } from "./journalService";
  */
 export const addFoodItem = async (
   journal: IJournal,
-  fooditem: IFoodItem,
+  fooditem: JournalFoodItem,
 ): Promise<void> => {
   await db.fooditem.add(fooditem);
 
@@ -21,13 +21,24 @@ export const addFoodItem = async (
  * @param id The ID of the food item.
  * @returns A promise that resolves to a food item object or undefined if no entry is found with the given id.
  */
-export const getFoodItem = async (id: number): Promise<IFoodItem | undefined> =>
-  await db.fooditem.get(id);
+export const getFoodItem = async (
+  id: number,
+): Promise<JournalFoodItem | undefined> => await db.fooditem.get(id);
 
 export const bulkGetFoodItem = async (ids: number[]) =>
   await db.fooditem.bulkGet(ids);
 
 export const deleteFoodItem = async (id: number) => db.fooditem.delete(id);
 
-export const editFoodItem = async (id: number, changes: IFoodItem) =>
+export const editFoodItem = async (id: number, changes: JournalFoodItem) =>
   db.fooditem.update(id, changes);
+
+export const normalizeNutriment = ({
+  nutriment,
+  consumed_g,
+  decimal,
+}: {
+  nutriment: number;
+  consumed_g: number;
+  decimal?: number;
+}) => Number(((consumed_g / 100) * nutriment).toFixed(decimal ?? 2));

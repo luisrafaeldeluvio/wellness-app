@@ -13,7 +13,7 @@ const CalendarHead = ({ date }: DateProps) => {
 
   return (
     <div className="m-4 mx-auto flex h-18 w-[90%] flex-row items-center justify-around rounded-4xl border">
-      <Link href={`/journal/${jumpDate(-1)}`}>
+      <Link href={`/${jumpDate(-1)}`}>
         <Button>
           <img src={chevronLeftIcon} alt="Previous Day" />
         </Button>
@@ -26,7 +26,7 @@ const CalendarHead = ({ date }: DateProps) => {
         <span>{date.format("dddd")}</span>
       </div>
 
-      <Link href={`/journal/${jumpDate(1)}`}>
+      <Link href={`/${jumpDate(1)}`}>
         <Button>
           <img src={chevronRightIcon} alt="Next day" />
         </Button>

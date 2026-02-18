@@ -1,6 +1,6 @@
 import { useLocation } from "wouter";
 import Button from "../components/ui/Button";
-import Header from "../components/ui/Header";
+import { Header } from "../components/ui/Header";
 
 const Menu = () => {
   const [, setLocation] = useLocation();
@@ -8,7 +8,7 @@ const Menu = () => {
     <>
       <Header>Menu</Header>
       <div>
-        <Button onClick={() => setLocation("/Profile")}>Profile</Button>
+        <Button onClick={() => setLocation("/profile")}>Profile</Button>
       </div>
     </>
   );

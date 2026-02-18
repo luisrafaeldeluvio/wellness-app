@@ -1,6 +1,6 @@
 import { useLocation } from "wouter";
 import Button from "../components/ui/Button";
-import Header from "../components/ui/Header";
+import { Header } from "../components/ui/Header";
 import { type IUserInfo } from "../db";
 import { useEffect, useState } from "react";
 import {
@@ -126,7 +126,7 @@ const Profile = () => {
     <>
       {/* should i make a component for this back button + header? */}
       <div className="flex flex-row items-center">
-        <Button onClick={() => setLocation("/Menu")} style="mr-0">
+        <Button onClick={() => setLocation("/menu")} style="mr-0">
           Back
         </Button>
         <Header>Profile</Header>
