@@ -64,6 +64,7 @@ const LogFood = () => {
           ? searchResult?.map((e) => {
               return (
                 <FoodItem
+                  key={e.code}
                   id={e.code}
                   name={e.name}
                   energy={e.nutriments["energy-kcal_100g"]}
