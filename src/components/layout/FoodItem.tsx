@@ -37,7 +37,7 @@ const FoodItem = ({
       key={id}
       className="scrollbar-none flex w-full min-w-0 snap-x snap-mandatory flex-row overflow-x-auto text-sm [scrollbar-width:none]"
     >
-      {options.disableEdit && (
+      {options.disableEdit ?? (
         <div className="flex shrink-0 basis-1/4 snap-end items-center justify-center bg-green-500">
           <Link href={`/editlogfood/${id}`}>
             <Button>
@@ -60,7 +60,7 @@ const FoodItem = ({
         <span className="ml-auto p-4">{energy} kcal</span>
       </div>
 
-      {options.disableDelete && (
+      {options.disableDelete ?? (
         <div className="flex shrink-0 basis-1/4 snap-start items-center justify-center bg-red-500">
           <Button
             onClick={() => {
