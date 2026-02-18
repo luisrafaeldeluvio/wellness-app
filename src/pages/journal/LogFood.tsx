@@ -9,38 +9,42 @@ import { getFoodSearchResults } from "../../services/openFoodFacts";
 import { type FoodItem as IFoodItem } from "../../db";
 import FoodItem from "../../components/layout/FoodItem";
 
-interface DateParams {
-  date: string;
-}
-
 const DefaultNoSearch = () => {};
 
 const NoSearchResult = () => {};
 
 const LogFood = () => {
   const [searchResult, setSearchResult] = useState<IFoodItem[]>();
+  const [callingAPI, setCallingAPI] = useState<boolean | null>(null);
+
+  const handleSearch = async (data: FormData) => {
+    setSearchResult(
+      await getFoodSearchResults({
+        searchTerm: String(data.get("searchOpenFoodFacts")),
+      }),
+    );
+
+    setCallingAPI(false);
+  };
 
   return (
     <>
       <PageHeader headerText="Log Food" />
 
       <div className="m-4 mx-auto flex h-18 w-[90%] flex-row items-center justify-around rounded-4xl border">
-        <Button>
-          <img src={searchIcon} alt="Search for Food" />
-        </Button>
-
         <form
+          className="just flex flex-row items-center"
           action={(e) => {
-            (async () => {
-              setSearchResult(
-                await getFoodSearchResults({
-                  searchTerm: String(e.get("searchOpenFoodFacts")),
-                }),
-              );
-            })();
+            setCallingAPI(true);
+            handleSearch(e);
           }}
         >
+          <Button style="shrink-0">
+            <img src={searchIcon} alt="Search for Food" />
+          </Button>
+
           <input
+            className="w-full flex-1"
             type="search"
             name="searchOpenFoodFacts"
             id="searchOpenFoodFacts"
@@ -48,26 +52,32 @@ const LogFood = () => {
           />
         </form>
 
-        <Button style="border-0!">
+        <Button style="shrink-0">
           <img src={barcodeIcon} alt="Scan a barcode" />
         </Button>
       </div>
 
-      {searchResult?.map((e) => {
-        return (
-          <FoodItem
-            id={e.code}
-            name={e.name}
-            energy={e.nutriments["energy-kcal_100g"]}
-            options={{ disableDelete: true, disableEdit: true }}
-          />
-        );
-      })}
+      {callingAPI ? <p className="w-full text-center">searching...</p> : null}
+
+      <div className="scroll-auto">
+        {!callingAPI
+          ? searchResult?.map((e) => {
+              return (
+                <FoodItem
+                  id={e.code}
+                  name={e.name}
+                  energy={e.nutriments["energy-kcal_100g"]}
+                  options={{ disableDelete: true, disableEdit: true }}
+                />
+              );
+            })
+          : null}
+      </div>
 
       <Link href={`/create`}>
-        <button className="absolute right-0 bottom-0 m-4 rounded-xl border bg-white p-2">
+        <Button style="fixed right-0 bottom-15 bg-white">
           <img src={addIcon} className="size-9" />
-        </button>
+        </Button>
       </Link>
     </>
   );
