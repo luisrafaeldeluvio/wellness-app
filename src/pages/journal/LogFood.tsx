@@ -9,18 +9,17 @@ import { getFoodSearchResults } from "../../services/openFoodFacts";
 import { type FoodItem as IFoodItem } from "../../db";
 import FoodItem from "../../components/layout/FoodItem";
 
-const DefaultNoSearch = () => {};
-
-const NoSearchResult = () => {};
-
 const LogFood = () => {
   const [searchResult, setSearchResult] = useState<IFoodItem[]>();
   const [callingAPI, setCallingAPI] = useState<boolean | null>(null);
+  const [searchQuery, setSearchQUery] = useState<string>("");
+  let lastScrollStop = 0;
 
-  const handleSearch = async (data: FormData) => {
+  const handleSearch = async (data: string) => {
     setSearchResult(
       await getFoodSearchResults({
-        searchTerm: String(data.get("searchOpenFoodFacts")),
+        searchTerm: data,
+        options: 
       }),
     );
 
@@ -28,15 +27,34 @@ const LogFood = () => {
   };
 
   return (
-    <>
+    <div
+      className="w-full overflow-y-auto scroll-auto"
+      onScroll={(e) => {
+        console.log("scrolling");
+
+        if (e.currentTarget.scrollTop < lastScrollStop) return;
+        lastScrollStop =
+          e.currentTarget.scrollTop <= 0 ? 0 : e.currentTarget.scrollTop;
+        if (
+          e.currentTarget.scrollTop + e.currentTarget.offsetHeight >=
+          e.currentTarget.scrollHeight
+        ) {
+          console.log("End");
+
+          setCallingAPI(true);
+          handleSearch(searchQuery);
+        }
+      }}
+    >
       <PageHeader headerText="Log Food" />
 
       <div className="m-4 mx-auto flex h-18 w-[90%] flex-row items-center justify-around rounded-4xl border">
         <form
           className="just flex flex-row items-center"
           action={(e) => {
+            setSearchQUery(String(e.get("searchOpenFoodFacts")));
             setCallingAPI(true);
-            handleSearch(e);
+            handleSearch(String(e.get("searchOpenFoodFacts")));
           }}
         >
           <Button style="shrink-0">
@@ -57,9 +75,7 @@ const LogFood = () => {
         </Button>
       </div>
 
-      {callingAPI ? <p className="w-full text-center">searching...</p> : null}
-
-      <div className="scroll-auto">
+      <div>
         {!callingAPI
           ? searchResult?.map((e) => {
               return (
@@ -75,12 +91,14 @@ const LogFood = () => {
           : null}
       </div>
 
+      {callingAPI ? <p className="w-full text-center">searching...</p> : null}
+
       <Link href={`/create`}>
         <Button style="fixed right-0 bottom-15 bg-white">
           <img src={addIcon} className="size-9" />
         </Button>
       </Link>
-    </>
+    </div>
   );
 };
 

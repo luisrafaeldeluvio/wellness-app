@@ -29,7 +29,7 @@ const App = () => {
 
   return (
     <div className="flex flex-col overflow-hidden">
-      <main className="relative flex h-[calc(100dvh-(var(--spacing)*16))] grow flex-col overflow-y-auto">
+      <main className="relative flex h-[calc(100dvh-(var(--spacing)*16))] grow flex-col overflow-hidden">
         <Switch>
           <Route path="/">
             <Redirect to="/home" />
